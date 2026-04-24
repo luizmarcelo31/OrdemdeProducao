@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Facção — Gestão Têxtil</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">
+      <div class="logo-icon">GT</div>
+      <div><div class="logo-text">Gestão Têxtil</div><div class="logo-sub">Controle de Produção</div></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Principal</div>
+    <a href="index.html" class="nav-link"><span class="nav-icon">⬡</span> Dashboard</a>
+    <a href="production.html" class="nav-link"><span class="nav-icon">📋</span> Ordens de Produção</a>
+    <div class="nav-section-label">Facção</div>
+    <a href="outsource.html" class="nav-link"><span class="nav-icon">🚚</span> Envio / Retorno</a>
+    <div class="nav-section-label">Operacional</div>
+    <a href="inventory.html" class="nav-link"><span class="nav-icon">📦</span> Consumo de Material</a>
+    <a href="entries.html" class="nav-link"><span class="nav-icon">✅</span> Entradas Finais</a>
+    <div class="nav-section-label">Relatórios</div>
+    <a href="reports.html" class="nav-link"><span class="nav-icon">📊</span> Relatórios & PDF</a>
+  </nav>
+  <div class="sidebar-footer">v1.0 · Sistema Têxtil</div>
+</aside>
+
+<main class="main-content">
+  <div class="top-bar">
+    <span class="top-bar-title">Controle de Facção <span class="top-bar-breadcrumb">/ Envio & Retorno</span></span>
+    <div class="btn-group">
+      <button class="btn btn-outline btn-sm" onclick="setTab('envio')">🚚 Envio</button>
+      <button class="btn btn-outline btn-sm" onclick="setTab('retorno')">📥 Retorno</button>
+    </div>
+  </div>
+
+  <div class="page-content">
+
+    <!-- TABS -->
+    <div style="display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:0">
+      <button id="tab-envio" class="btn btn-ghost" style="border-radius:6px 6px 0 0;border-bottom:2px solid var(--accent);color:var(--accent)" onclick="setTab('envio')">🚚 Nota de Envio</button>
+      <button id="tab-retorno" class="btn btn-ghost" style="border-radius:6px 6px 0 0" onclick="setTab('retorno')">📥 Nota de Retorno</button>
+    </div>
+
+    <!-- ===== ENVIO ===== -->
+    <div id="section-envio">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Nova Nota de Envio para Facção</div>
+            <div class="card-subtitle">Registre o envio de peças para serviço terceirizado</div>
+          </div>
+        </div>
+        <input type="hidden" id="envio-edit-id" />
+        <form id="form-envio" novalidate>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Nº da Nota <span class="required">*</span></label>
+              <input id="envio-num" class="form-control" type="text" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">OP Vinculada <span class="required">*</span></label>
+              <select id="envio-op" class="form-control" required>
+                <option value="">Selecione a OP...</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Data de Envio <span class="required">*</span></label>
+              <input id="envio-data" class="form-control" type="date" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Prazo de Retorno <span class="required">*</span></label>
+              <input id="envio-prazo" class="form-control" type="date" required />
+            </div>
+            <div class="form-group form-span-2">
+              <label class="form-label">Nome da Facção / Prestador <span class="required">*</span></label>
+              <input id="envio-faccao" class="form-control" type="text" required placeholder="Ex: Confecções Silva Ltda" />
+            </div>
+            <div class="form-group form-span-2">
+              <label class="form-label">Tipo de Serviço <span class="required">*</span></label>
+              <input id="envio-servico" class="form-control" type="text" required placeholder="Ex: Costura completa, Bordado, Estamparia, Corte..." />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Quantidade Enviada <span class="required">*</span></label>
+              <input id="envio-qtd" class="form-control" type="number" min="1" required placeholder="0" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Status</label>
+              <select id="envio-status" class="form-control">
+                <option value="enviada">Enviada</option>
+                <option value="em_producao">Em Produção</option>
+                <option value="atrasada">Atrasada</option>
+                <option value="retornada">Retornada</option>
+                <option value="cancelada">Cancelada</option>
+              </select>
+            </div>
+            <div class="form-group form-span-full">
+              <label class="form-label">Observações / Instruções</label>
+              <textarea id="envio-obs" class="form-control" placeholder="Instruções especiais, acabamento, embalagem..."></textarea>
+            </div>
+          </div>
+          <hr class="divider" />
+          <div class="btn-group">
+            <button type="submit" class="btn btn-primary btn-lg">💾 Salvar Nota de Envio</button>
+            <button type="button" class="btn btn-outline" onclick="gerarPDFEnvio()">📄 Gerar PDF da Nota</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Tabela envios -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Notas de Envio Registradas</div>
+          <button class="btn btn-outline btn-sm" onclick="loadEnvios()">↻</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th>Nota</th><th>OP</th><th>Facção</th><th>Serviço</th>
+              <th>Qtd</th><th>Envio</th><th>Prazo</th><th>Status</th><th>Ações</th>
+            </tr></thead>
+            <tbody id="envios-tbody">
+              <tr><td colspan="9"><div class="empty-state"><div class="spinner" style="margin:0 auto"></div></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== RETORNO ===== -->
+    <div id="section-retorno" class="hidden">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Registrar Retorno da Facção</div>
+            <div class="card-subtitle">Confira e registre o recebimento de peças</div>
+          </div>
+        </div>
+        <form id="form-retorno" novalidate>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">OP Vinculada <span class="required">*</span></label>
+              <select id="ret-op" class="form-control" required>
+                <option value="">Selecione a OP...</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nota de Envio (opcional)</label>
+              <select id="ret-envio" class="form-control">
+                <option value="">Sem vínculo direto</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Facção <span class="required">*</span></label>
+              <input id="ret-faccao" class="form-control" type="text" required placeholder="Nome da facção" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Data de Retorno <span class="required">*</span></label>
+              <input id="ret-data" class="form-control" type="date" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Quantidade Recebida <span class="required">*</span></label>
+              <input id="ret-qtd" class="form-control" type="number" min="0" required placeholder="0" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Perdas</label>
+              <input id="ret-perdas" class="form-control" type="number" min="0" value="0" placeholder="0" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Avarias</label>
+              <input id="ret-avarias" class="form-control" type="number" min="0" value="0" placeholder="0" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Status Conferência</label>
+              <select id="ret-conf" class="form-control">
+                <option value="pendente">Pendente</option>
+                <option value="conferido">Conferido</option>
+                <option value="aprovado">Aprovado</option>
+                <option value="reprovado">Reprovado</option>
+                <option value="parcial">Aprovado Parcial</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Responsável Conferência</label>
+              <input id="ret-resp" class="form-control" type="text" placeholder="Nome" />
+            </div>
+            <div class="form-group form-span-full">
+              <label class="form-label">Observações</label>
+              <textarea id="ret-obs" class="form-control" placeholder="Anotações de conferência, não-conformidades..."></textarea>
+            </div>
+          </div>
+          <hr class="divider" />
+          <div class="btn-group">
+            <button type="submit" class="btn btn-primary btn-lg">💾 Registrar Retorno</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Tabela retornos -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Retornos Registrados</div>
+          <button class="btn btn-outline btn-sm" onclick="loadRetornos()">↻</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th>OP</th><th>Facção</th><th>Recebido</th><th>Perdas</th>
+              <th>Avarias</th><th>Data</th><th>Conferência</th><th>Responsável</th>
+            </tr></thead>
+            <tbody id="retornos-tbody">
+              <tr><td colspan="8"><div class="empty-state"><div class="spinner" style="margin:0 auto"></div></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="js/supabase.js"></script>
+<script src="js/pdf.js"></script>
+<script>
+let _ops = [];
+
+function setTab(tab) {
+  document.getElementById('section-envio').classList.toggle('hidden', tab !== 'envio');
+  document.getElementById('section-retorno').classList.toggle('hidden', tab !== 'retorno');
+  document.getElementById('tab-envio').style.borderBottom = tab === 'envio' ? '2px solid var(--accent)' : 'none';
+  document.getElementById('tab-envio').style.color = tab === 'envio' ? 'var(--accent)' : '';
+  document.getElementById('tab-retorno').style.borderBottom = tab === 'retorno' ? '2px solid var(--accent)' : 'none';
+  document.getElementById('tab-retorno').style.color = tab === 'retorno' ? 'var(--accent)' : '';
+}
+
+// Checar hash para tab inicial
+if (location.hash === '#retorno') setTimeout(() => setTab('retorno'), 100);
+
+async function loadOPsSelect() {
+  _ops = await DB.list('ordens_producao', { order: { col: 'created_at', asc: false } });
+  const opts = _ops.map(o => `<option value="${o.id}">${o.numero_op} — ${o.modelo}</option>`).join('');
+  ['envio-op', 'ret-op'].forEach(id => {
+    const el = document.getElementById(id);
+    el.innerHTML = '<option value="">Selecione a OP...</option>' + opts;
+  });
+}
+
+async function loadEnvios() {
+  const envios = await DB.list('notas_envio_faccao', { order: { col: 'created_at', asc: false } });
+  const tbody = document.getElementById('envios-tbody');
+  if (!envios.length) {
+    tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state"><div class="empty-icon">🚚</div><div class="empty-title">Nenhum envio registrado</div></div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = envios.map(e => {
+    const op = _ops.find(o => o.id === e.op_id);
+    return `<tr>
+      <td class="td-mono">${e.numero_nota}</td>
+      <td class="td-mono">${op?.numero_op || '—'}</td>
+      <td>${e.nome_faccao}</td><td>${e.tipo_servico}</td>
+      <td>${e.quantidade_env}</td><td>${fmtDate(e.data_envio)}</td><td>${fmtDate(e.prazo_retorno)}</td>
+      <td>${statusBadge(e.status)}</td>
+      <td>
+        <button class="btn btn-outline btn-sm" onclick="gerarPDFEnvioById('${e.id}')">📄 PDF</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+async function loadRetornos() {
+  const rets = await DB.list('notas_retorno_faccao', { order: { col: 'created_at', asc: false } });
+  const tbody = document.getElementById('retornos-tbody');
+  if (!rets.length) {
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📥</div><div class="empty-title">Nenhum retorno registrado</div></div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = rets.map(r => {
+    const op = _ops.find(o => o.id === r.op_id);
+    const confClass = { aprovado: 'badge-green', reprovado: 'badge-red', conferido: 'badge-blue', pendente: 'badge-gray', parcial: 'badge-orange' };
+    return `<tr>
+      <td class="td-mono">${op?.numero_op || '—'}</td>
+      <td>${r.nome_faccao}</td><td>${r.quantidade_recebida}</td>
+      <td style="color:var(--status-orange)">${r.perdas}</td>
+      <td style="color:var(--status-red)">${r.avarias}</td>
+      <td>${fmtDate(r.data_retorno)}</td>
+      <td><span class="badge ${confClass[r.status_conferencia]||'badge-gray'}">${r.status_conferencia}</span></td>
+      <td>${r.responsavel_conf || '—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+// Formulário envio
+document.getElementById('form-envio').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const payload = {
+    numero_nota: document.getElementById('envio-num').value.trim(),
+    op_id: document.getElementById('envio-op').value,
+    nome_faccao: document.getElementById('envio-faccao').value.trim(),
+    tipo_servico: document.getElementById('envio-servico').value.trim(),
+    quantidade_env: parseInt(document.getElementById('envio-qtd').value),
+    data_envio: document.getElementById('envio-data').value,
+    prazo_retorno: document.getElementById('envio-prazo').value,
+    status: document.getElementById('envio-status').value,
+    observacoes: document.getElementById('envio-obs').value.trim(),
+  };
+  if (!payload.numero_nota || !payload.op_id || !payload.nome_faccao || !payload.quantidade_env) {
+    return showToast('Preencha todos os campos obrigatórios!', 'error');
+  }
+  try {
+    showLoading('Salvando...');
+    await DB.insert('notas_envio_faccao', payload);
+    // Atualiza status da OP
+    await DB.update('ordens_producao', payload.op_id, { status: 'aguardando_retorno' });
+    showToast(`Nota ${payload.numero_nota} registrada!`, 'success');
+    e.target.reset();
+    document.getElementById('envio-num').value = gerarNumeroNota('NE');
+    document.getElementById('envio-data').value = new Date().toISOString().split('T')[0];
+    await loadEnvios();
+  } catch(err) {
+    showToast('Erro: ' + err.message, 'error');
+  } finally { hideLoading(); }
+});
+
+// Formulário retorno
+document.getElementById('ret-op').addEventListener('change', async (e) => {
+  const opId = e.target.value;
+  if (!opId) return;
+  const envios = await DB.list('notas_envio_faccao', { filter: { op_id: opId } });
+  const sel = document.getElementById('ret-envio');
+  sel.innerHTML = '<option value="">Sem vínculo direto</option>' + envios.map(en => `<option value="${en.id}">${en.numero_nota} (${fmtDate(en.data_envio)})</option>`).join('');
+  const op = _ops.find(o => o.id === opId);
+  if (op) document.getElementById('ret-faccao').value = op.responsavel || '';
+});
+
+document.getElementById('form-retorno').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const opId = document.getElementById('ret-op').value;
+  const payload = {
+    op_id: opId,
+    envio_id: document.getElementById('ret-envio').value || null,
+    nome_faccao: document.getElementById('ret-faccao').value.trim(),
+    quantidade_recebida: parseInt(document.getElementById('ret-qtd').value) || 0,
+    perdas: parseInt(document.getElementById('ret-perdas').value) || 0,
+    avarias: parseInt(document.getElementById('ret-avarias').value) || 0,
+    data_retorno: document.getElementById('ret-data').value,
+    status_conferencia: document.getElementById('ret-conf').value,
+    responsavel_conf: document.getElementById('ret-resp').value.trim(),
+    observacoes: document.getElementById('ret-obs').value.trim(),
+  };
+  if (!payload.op_id || !payload.nome_faccao || !payload.data_retorno) {
+    return showToast('Preencha os campos obrigatórios!', 'error');
+  }
+  try {
+    showLoading('Salvando retorno...');
+    await DB.insert('notas_retorno_faccao', payload);
+    await DB.update('ordens_producao', opId, { status: 'em_conferencia' });
+    showToast('Retorno registrado com sucesso!', 'success');
+    e.target.reset();
+    document.getElementById('ret-data').value = new Date().toISOString().split('T')[0];
+    await loadRetornos();
+  } catch(err) {
+    showToast('Erro: ' + err.message, 'error');
+  } finally { hideLoading(); }
+});
+
+async function gerarPDFEnvio() {
+  const opId = document.getElementById('envio-op').value;
+  if (!opId) return showToast('Selecione uma OP antes de gerar o PDF', 'error');
+  const op = _ops.find(o => o.id === opId);
+  const envioData = {
+    numero_nota: document.getElementById('envio-num').value || gerarNumeroNota('NE'),
+    nome_faccao: document.getElementById('envio-faccao').value,
+    tipo_servico: document.getElementById('envio-servico').value,
+    quantidade_env: parseInt(document.getElementById('envio-qtd').value) || 0,
+    data_envio: document.getElementById('envio-data').value,
+    prazo_retorno: document.getElementById('envio-prazo').value,
+    observacoes: document.getElementById('envio-obs').value,
+  };
+  try {
+    showLoading('Gerando PDF...');
+    const doc = await PDFGen.gerarNotaEnvio(envioData, op);
+    PDFGen.baixar(doc, `Nota_Envio_${envioData.numero_nota}.pdf`);
+  } catch(e) { showToast('Erro no PDF: ' + e.message, 'error'); }
+  finally { hideLoading(); }
+}
+
+async function gerarPDFEnvioById(envioId) {
+  try {
+    showLoading('Gerando PDF...');
+    const envio = await DB.get('notas_envio_faccao', envioId);
+    const op = _ops.find(o => o.id === envio.op_id) || {};
+    const doc = await PDFGen.gerarNotaEnvio(envio, op);
+    PDFGen.baixar(doc, `Nota_Envio_${envio.numero_nota}.pdf`);
+  } catch(e) { showToast('Erro: ' + e.message, 'error'); }
+  finally { hideLoading(); }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadOPsSelect();
+  await loadEnvios();
+  await loadRetornos();
+  document.getElementById('envio-num').value = gerarNumeroNota('NE');
+  document.getElementById('envio-data').value = new Date().toISOString().split('T')[0];
+  document.getElementById('ret-data').value = new Date().toISOString().split('T')[0];
+});
+</script>
+</body>
+</html>
