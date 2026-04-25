@@ -3,12 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Gestão de ordens de produção têxtil" />
   <title>Ordens de Produção — Gestão Têxtil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-<aside class="sidebar">
+<aside class="sidebar" aria-label="Menu de navegação">
   <div class="sidebar-logo">
     <div class="logo-mark">
       <div class="logo-icon">GT</div>
@@ -55,17 +59,17 @@
         <div class="form-grid">
 
           <div class="form-group">
-            <label class="form-label">Nº DA ORDEM DE PRODUÇÃO <span class="required">*</span></label>
+            <label class="form-label" for="num-op">Nº DA ORDEM DE PRODUÇÃO <span class="required">*</span></label>
             <input id="num-op" class="form-control" type="text" required placeholder="OP2506-XXXX" />
           </div>
 
           <div class="form-group">
-            <label class="form-label">Data <span class="required">*</span></label>
+            <label class="form-label" for="data-op">Data <span class="required">*</span></label>
             <input id="data-op" class="form-control" type="date" required />
           </div>
 
           <div class="form-group">
-            <label class="form-label">Status</label>
+            <label class="form-label" for="status-op">Status</label>
             <select id="status-op" class="form-control">
               <option value="aberta">Aberta</option>
               <option value="em_producao">Em Produção</option>
@@ -77,7 +81,7 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label">Prioridade</label>
+            <label class="form-label" for="prioridade">Prioridade</label>
             <select id="prioridade" class="form-control">
               <option value="baixa">Baixa</option>
               <option value="normal" selected>Normal</option>
@@ -87,37 +91,37 @@
           </div>
 
           <div class="form-group form-span-2">
-            <label class="form-label">Modelo / Produto <span class="required">*</span></label>
+            <label class="form-label" for="modelo">Modelo / Produto <span class="required">*</span></label>
             <input id="modelo" class="form-control" type="text" required placeholder="Ex: Camisa Social Slim, Calça Jeans Skinny..." />
           </div>
 
           <div class="form-group form-span-2">
-            <label class="form-label">Descrição / Referência</label>
+            <label class="form-label" for="descricao">Descrição / Referência</label>
             <input id="descricao" class="form-control" type="text" placeholder="Ref. interna, coleção, detalhes..." />
           </div>
 
           <div class="form-group">
-            <label class="form-label">Quantidade Total <span class="required">*</span></label>
+            <label class="form-label" for="quantidade">Quantidade Total <span class="required">*</span></label>
             <input id="quantidade" class="form-control" type="number" min="1" required placeholder="0" />
           </div>
 
           <div class="form-group">
-            <label class="form-label">Cor <span class="required">*</span></label>
+            <label class="form-label" for="cor">Cor <span class="required">*</span></label>
             <input id="cor" class="form-control" type="text" required placeholder="Ex: Branco, Navy, Preto..." />
           </div>
 
           <div class="form-group">
-            <label class="form-label">Tamanho(s) <span class="required">*</span></label>
+            <label class="form-label" for="tamanho">Tamanho(s) <span class="required">*</span></label>
             <input id="tamanho" class="form-control" type="text" required placeholder="Ex: P / M / G / GG  ou  36-44" />
           </div>
 
           <div class="form-group">
-            <label class="form-label">Responsável <span class="required">*</span></label>
+            <label class="form-label" for="responsavel">Responsável <span class="required">*</span></label>
             <input id="responsavel" class="form-control" type="text" required placeholder="Nome do responsável" />
           </div>
 
           <div class="form-group form-span-full">
-            <label class="form-label">Observações</label>
+            <label class="form-label" for="obs-op">Observações</label>
             <textarea id="obs-op" class="form-control" placeholder="Instruções especiais, detalhes de acabamento, clientes..."></textarea>
           </div>
         </div>
@@ -146,7 +150,9 @@
           </div>
         </div>
         <div class="btn-group">
+          <label for="busca-op" class="sr-only">Buscar ordem de produção</label>
           <input id="busca-op" class="form-control" type="text" placeholder="🔍 Buscar ORDEM DE PRODUÇÃO, modelo, responsável..." style="width:220px" />
+          <label for="filtro-status" class="sr-only">Filtrar por status</label>
           <select id="filtro-status" class="form-control" style="width:150px">
             <option value="">Todos os status</option>
             <option value="aberta">Aberta</option>
@@ -156,7 +162,7 @@
             <option value="finalizada">Finalizada</option>
             <option value="cancelada">Cancelada</option>
           </select>
-          <button class="btn btn-outline btn-sm" onclick="ProdPage.loadOPs()">↻ Atualizar</button>
+          <button class="btn btn-outline btn-sm" onclick="ProdPage.loadOPs()" aria-label="Atualizar lista">↻ Atualizar</button>
         </div>
       </div>
 
@@ -164,15 +170,15 @@
         <table>
           <thead>
             <tr>
-              <th>Nº ORDEM DE PRODUÇÃO</th>
-              <th>Data</th>
-              <th>Modelo / Cor / Tam</th>
-              <th>Qtd</th>
-              <th>Status</th>
-              <th>Prioridade</th>
-              <th>Responsável</th>
-              <th>Cadastro</th>
-              <th>Ações</th>
+            <th scope="col">Nº ORDEM DE PRODUÇÃO</th>
+              <th scope="col">Data</th>
+              <th scope="col">Modelo / Cor / Tam</th>
+              <th scope="col">Qtd</th>
+              <th scope="col">Status</th>
+              <th scope="col">Prioridade</th>
+              <th scope="col">Responsável</th>
+              <th scope="col">Cadastro</th>
+              <th scope="col">Ações</th>
             </tr>
           </thead>
           <tbody id="ops-tbody">
@@ -185,11 +191,11 @@
   </div>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="js/supabase.js"></script>
-<script src="js/pdf.js"></script>
-<script src="js/production.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+<script src="js/supabase.js" defer></script>
+<script src="js/pdf.js" defer></script>
+<script src="js/production.js" defer></script>
 <script>
   // Atualiza contador
   // Preserve original renderTable and ensure correct context when updating the counter.

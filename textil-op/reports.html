@@ -3,12 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Geração de relatórios e PDFs de produção" />
   <title>Relatórios & PDF — Gestão Têxtil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-<aside class="sidebar">
+<aside class="sidebar" aria-label="Menu de navegação">
   <div class="sidebar-logo">
     <div class="logo-mark">
       <div class="logo-icon">GT</div>
@@ -47,7 +51,7 @@
       </div>
       <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap">
         <div class="form-group" style="flex:1;min-width:280px">
-          <label class="form-label">SELECIONE A ORDEM DE PRODUÇÃO</label>
+          <label class="form-label" for="sel-op-ficha">SELECIONE A ORDEM DE PRODUÇÃO</label>
           <select id="sel-op-ficha" class="form-control">
             <option value="">Selecione uma Ordem de Produção...</option>
           </select>
@@ -76,7 +80,7 @@
       </div>
       <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap">
         <div class="form-group" style="flex:1;min-width:280px">
-          <label class="form-label">Selecione a Nota de Envio</label>
+          <label class="form-label" for="sel-nota-envio">Selecione a Nota de Envio</label>
           <select id="sel-nota-envio" class="form-control">
             <option value="">Selecione uma nota...</option>
           </select>
@@ -95,7 +99,7 @@
       </div>
       <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap">
         <div class="form-group">
-          <label class="form-label">Status (filtro)</label>
+          <label class="form-label" for="rel-status">Status (filtro)</label>
           <select id="rel-status" class="form-control">
             <option value="">Todos os status</option>
             <option value="aberta">Abertas</option>
@@ -106,11 +110,11 @@
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">Período — De</label>
+          <label class="form-label" for="rel-de">Período — De</label>
           <input id="rel-de" class="form-control" type="date" />
         </div>
         <div class="form-group">
-          <label class="form-label">Período — Até</label>
+          <label class="form-label" for="rel-ate">Período — Até</label>
           <input id="rel-ate" class="form-control" type="date" />
         </div>
         <button class="btn btn-primary btn-lg" onclick="gerarRelatorio()"> Gerar Relatório PDF</button>
@@ -126,8 +130,8 @@
       <div class="table-wrap">
         <table>
           <thead><tr>
-            <th>Nº ORDEM DE PRODUÇÃO</th><th>Data</th><th>Modelo</th><th>Qtd</th>
-            <th>Status</th><th>Prioridade</th><th>Responsável</th><th>PDF</th>
+            <th scope="col">Nº ORDEM DE PRODUÇÃO</th><th scope="col">Data</th><th scope="col">Modelo</th><th scope="col">Qtd</th>
+            <th scope="col">Status</th><th scope="col">Prioridade</th><th scope="col">Responsável</th><th scope="col">PDF</th>
           </tr></thead>
           <tbody id="rel-tbody">
             <tr><td colspan="8"><div class="empty-state"><div class="spinner" style="margin:0 auto"></div></div></td></tr>
@@ -139,10 +143,10 @@
   </div>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="js/supabase.js"></script>
-<script src="js/pdf.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+<script src="js/supabase.js" defer></script>
+<script src="js/pdf.js" defer></script>
 <script>
 let _ops = [], _envios = [];
 

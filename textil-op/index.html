@@ -3,13 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sistema de gestão de produção têxtil — Dashboard" />
   <title>Gestão Têxtil — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
 <!-- SIDEBAR -->
-<aside class="sidebar">
+<aside class="sidebar" aria-label="Menu de navegação">
   <div class="sidebar-logo">
     <div class="logo-mark">
       <div class="logo-icon">GT</div>
@@ -41,39 +45,39 @@
 <main class="main-content">
   <div class="top-bar">
     <span class="top-bar-title">Dashboard <span class="top-bar-breadcrumb">/ Visão Geral</span></span>
-    <button class="btn btn-primary btn-sm" onclick="location.href='production.html'">+ NOVA ORDEM DE PEDIDO</button>
+    <button class="btn btn-primary btn-sm" onclick="location.href='production.html'">+ Nova Ordem de Pedido</button>
   </div>
 
   <div class="page-content">
 
     <!-- KPIs -->
-    <div class="kpi-grid" id="kpi-container">
-      <div class="kpi-card">
-        <div class="kpi-label">TOTAL DE ORDENS DE PRODUÇÃO</div>
-        <div class="kpi-value" id="kpi-total">—</div>
+    <section class="kpi-grid" id="kpi-container" aria-label="Indicadores-chave">
+      <div class="kpi-card" role="status">
+        <div class="kpi-label" id="kpi-total-label">Total de Ordens de Produção</div>
+        <div class="kpi-value" id="kpi-total" aria-labelledby="kpi-total-label">—</div>
         <div class="kpi-sub">ordens cadastradas</div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Em Produção</div>
-        <div class="kpi-value" id="kpi-prod">—</div>
+      <div class="kpi-card" role="status">
+        <div class="kpi-label" id="kpi-prod-label">Em Produção</div>
+        <div class="kpi-value" id="kpi-prod" aria-labelledby="kpi-prod-label">—</div>
         <div class="kpi-sub">em andamento</div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Ag. Retorno</div>
-        <div class="kpi-value" id="kpi-aguardando">—</div>
+      <div class="kpi-card" role="status">
+        <div class="kpi-label" id="kpi-aguardando-label">Ag. Retorno</div>
+        <div class="kpi-value" id="kpi-aguardando" aria-labelledby="kpi-aguardando-label">—</div>
         <div class="kpi-sub">na facção</div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Finalizadas</div>
-        <div class="kpi-value" id="kpi-finalizadas">—</div>
+      <div class="kpi-card" role="status">
+        <div class="kpi-label" id="kpi-finalizadas-label">Finalizadas</div>
+        <div class="kpi-value" id="kpi-finalizadas" aria-labelledby="kpi-finalizadas-label">—</div>
         <div class="kpi-sub">este ciclo</div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Urgentes</div>
-        <div class="kpi-value" id="kpi-urgentes" style="color:var(--status-orange)">—</div>
+      <div class="kpi-card" role="status">
+        <div class="kpi-label" id="kpi-urgentes-label">Urgentes</div>
+        <div class="kpi-value" id="kpi-urgentes" style="color:var(--status-orange)" aria-labelledby="kpi-urgentes-label">—</div>
         <div class="kpi-sub">alta prioridade</div>
       </div>
-    </div>
+    </section>
 
     <!-- Últimas OPs -->
     <div class="card">
@@ -85,17 +89,17 @@
         <a href="production.html" class="btn btn-outline btn-sm">Ver todas →</a>
       </div>
       <div class="table-wrap">
-        <table>
+        <table role="table">
           <thead>
             <tr>
-              <th>Nº ORDEM DE PRODUÇÃO</th>
-              <th>Data</th>
-              <th>Modelo</th>
-              <th>Qtd</th>
-              <th>Status</th>
-              <th>Prioridade</th>
-              <th>Responsável</th>
-              <th></th>
+              <th scope="col">Nº ORDEM DE PRODUÇÃO</th>
+              <th scope="col">Data</th>
+              <th scope="col">Modelo</th>
+              <th scope="col">Qtd</th>
+              <th scope="col">Status</th>
+              <th scope="col">Prioridade</th>
+              <th scope="col">Responsável</th>
+              <th scope="col" class="sr-only">Ações</th>
             </tr>
           </thead>
           <tbody id="tb-recentes">
@@ -106,30 +110,30 @@
     </div>
 
     <!-- Alertas -->
-    <div id="alertas-container"></div>
+    <div id="alertas-container" role="alert" aria-live="polite"></div>
 
     <!-- Atalhos -->
-    <div class="card">
+    <section class="card" aria-label="Ações rápidas">
       <div class="card-header">
         <div class="card-title">Ações Rápidas</div>
       </div>
       <div class="btn-group">
-        <a href="production.html" class="btn btn-primary"> NOVA ORDEM DE PEDIDO</a>
-        <a href="outsource.html" class="btn btn-outline">REGISTRAR ENVIO</a>
-        <a href="outsource.html#retorno" class="btn btn-outline">REGISTRAR RETORNO</a>
-        <a href="inventory.html" class="btn btn-outline">CONSUMO MATERIAL</a>
-        <a href="entries.html" class="btn btn-outline">ENTRADA FINAL</a>
-        <a href="reports.html" class="btn btn-success">GERAR RELATÓRIO PDF</a>
+        <a href="production.html" class="btn btn-primary">Nova Ordem de Pedido</a>
+        <a href="outsource.html" class="btn btn-outline">Registrar Envio</a>
+        <a href="outsource.html#retorno" class="btn btn-outline">Registrar Retorno</a>
+        <a href="inventory.html" class="btn btn-outline">Consumo Material</a>
+        <a href="entries.html" class="btn btn-outline">Entrada Final</a>
+        <a href="reports.html" class="btn btn-success">Gerar Relatório PDF</a>
       </div>
-    </div>
+    </section>
   </div>
 </main>
 
 <!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="js/supabase.js"></script>
-<script src="js/pdf.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+<script src="js/supabase.js" defer></script>
+<script src="js/pdf.js" defer></script>
 <script>
 async function initDashboard() {
   try {

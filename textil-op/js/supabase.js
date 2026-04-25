@@ -72,6 +72,8 @@ function showToast(msg, type = 'info') {
   if (!container) {
     container = document.createElement('div');
     container.id = 'toast-container';
+    container.setAttribute('aria-live', 'polite');
+    container.setAttribute('role', 'status');
     document.body.appendChild(container);
   }
   const t = document.createElement('div');

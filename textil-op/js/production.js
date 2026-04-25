@@ -219,6 +219,9 @@ const ProdPage = {
 
     const modal = document.createElement('div');
     modal.className = 'modal-overlay';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', `Ficha da Ordem de Produção: ${op.numero_op}`);
     modal.innerHTML = `
       <div class="modal-box" style="max-width:820px">
         <div class="modal-header">

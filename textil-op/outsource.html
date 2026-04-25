@@ -3,12 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Controle de facção — envio e retorno de peças" />
   <title>Facção — Gestão Têxtil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-<aside class="sidebar">
+<aside class="sidebar" aria-label="Menu de navegação">
   <div class="sidebar-logo">
     <div class="logo-mark">
       <div class="logo-icon">GT</div>
@@ -42,13 +46,13 @@
   <div class="page-content">
 
     <!-- TABS -->
-    <div style="display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:0">
-      <button id="tab-envio" class="btn btn-ghost" style="border-radius:6px 6px 0 0;border-bottom:2px solid var(--accent);color:var(--accent)" onclick="setTab('envio')">🚚 Nota de Envio</button>
-      <button id="tab-retorno" class="btn btn-ghost" style="border-radius:6px 6px 0 0" onclick="setTab('retorno')">📥 Nota de Retorno</button>
+    <div role="tablist" style="display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:0">
+      <button id="tab-envio" role="tab" aria-selected="true" aria-controls="section-envio" class="btn btn-ghost" style="border-radius:6px 6px 0 0;border-bottom:2px solid var(--accent);color:var(--accent)" onclick="setTab('envio')">Nota de Envio</button>
+      <button id="tab-retorno" role="tab" aria-selected="false" aria-controls="section-retorno" class="btn btn-ghost" style="border-radius:6px 6px 0 0" onclick="setTab('retorno')">Nota de Retorno</button>
     </div>
 
     <!-- ===== ENVIO ===== -->
-    <div id="section-envio">
+    <div id="section-envio" role="tabpanel" aria-labelledby="tab-envio">
       <div class="card">
         <div class="card-header">
           <div>
@@ -60,37 +64,37 @@
         <form id="form-envio" novalidate>
           <div class="form-grid">
             <div class="form-group">
-              <label class="form-label">Nº da Nota <span class="required">*</span></label>
+              <label class="form-label" for="envio-num">Nº da Nota <span class="required">*</span></label>
               <input id="envio-num" class="form-control" type="text" required />
             </div>
             <div class="form-group">
-              <label class="form-label">ORDEM DE PRODUÇÃO VINCULADA <span class="required">*</span></label>
+              <label class="form-label" for="envio-op">ORDEM DE PRODUÇÃO VINCULADA <span class="required">*</span></label>
               <select id="envio-op" class="form-control" required>
                 <option value="">Selecione a ORDEM DE PRODUÇÃO...</option>
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label">Data de Envio <span class="required">*</span></label>
+              <label class="form-label" for="envio-data">Data de Envio <span class="required">*</span></label>
               <input id="envio-data" class="form-control" type="date" required />
             </div>
             <div class="form-group">
-              <label class="form-label">Prazo de Retorno <span class="required">*</span></label>
+              <label class="form-label" for="envio-prazo">Prazo de Retorno <span class="required">*</span></label>
               <input id="envio-prazo" class="form-control" type="date" required />
             </div>
             <div class="form-group form-span-2">
-              <label class="form-label">Nome da Facção / Prestador <span class="required">*</span></label>
+              <label class="form-label" for="envio-faccao">Nome da Facção / Prestador <span class="required">*</span></label>
               <input id="envio-faccao" class="form-control" type="text" required placeholder="Ex: Confecções Silva Ltda" />
             </div>
             <div class="form-group form-span-2">
-              <label class="form-label">Tipo de Serviço <span class="required">*</span></label>
+              <label class="form-label" for="envio-servico">Tipo de Serviço <span class="required">*</span></label>
               <input id="envio-servico" class="form-control" type="text" required placeholder="Ex: Costura completa, Bordado, Estamparia, Corte..." />
             </div>
             <div class="form-group">
-              <label class="form-label">Quantidade Enviada <span class="required">*</span></label>
+              <label class="form-label" for="envio-qtd">Quantidade Enviada <span class="required">*</span></label>
               <input id="envio-qtd" class="form-control" type="number" min="1" required placeholder="0" />
             </div>
             <div class="form-group">
-              <label class="form-label">Status</label>
+              <label class="form-label" for="envio-status">Status</label>
               <select id="envio-status" class="form-control">
                 <option value="enviada">Enviada</option>
                 <option value="em_producao">Em Produção</option>
@@ -100,7 +104,7 @@
               </select>
             </div>
             <div class="form-group form-span-full">
-              <label class="form-label">Observações / Instruções</label>
+              <label class="form-label" for="envio-obs">Observações / Instruções</label>
               <textarea id="envio-obs" class="form-control" placeholder="Instruções especiais, acabamento, embalagem..."></textarea>
             </div>
           </div>
@@ -116,13 +120,13 @@
       <div class="card">
         <div class="card-header">
           <div class="card-title">Notas de Envio Registradas</div>
-          <button class="btn btn-outline btn-sm" onclick="loadEnvios()">↻</button>
+          <button class="btn btn-outline btn-sm" onclick="loadEnvios()" aria-label="Atualizar envios">↻</button>
         </div>
         <div class="table-wrap">
           <table>
             <thead><tr>
-              <th>Nota</th><th>ORDEM DE PRODUÇÃO</th><th>Facção</th><th>Serviço</th>
-              <th>Qtd</th><th>Envio</th><th>Prazo</th><th>Status</th><th>Ações</th>
+              <th scope="col">Nota</th><th scope="col">ORDEM DE PRODUÇÃO</th><th scope="col">Facção</th><th scope="col">Serviço</th>
+              <th scope="col">Qtd</th><th scope="col">Envio</th><th scope="col">Prazo</th><th scope="col">Status</th><th scope="col">Ações</th>
             </tr></thead>
             <tbody id="envios-tbody">
               <tr><td colspan="9"><div class="empty-state"><div class="spinner" style="margin:0 auto"></div></div></td></tr>
@@ -133,7 +137,7 @@
     </div>
 
     <!-- ===== RETORNO ===== -->
-    <div id="section-retorno" class="hidden">
+    <div id="section-retorno" class="hidden" role="tabpanel" aria-labelledby="tab-retorno">
       <div class="card">
         <div class="card-header">
           <div>
@@ -144,39 +148,39 @@
         <form id="form-retorno" novalidate>
           <div class="form-grid">
             <div class="form-group">
-              <label class="form-label">ORDEM DE PRODUÇÃO VINCULADA <span class="required">*</span></label>
+              <label class="form-label" for="ret-op">ORDEM DE PRODUÇÃO VINCULADA <span class="required">*</span></label>
               <select id="ret-op" class="form-control" required>
                 <option value="">Selecione a ORDEM DE PRODUÇÃO...</option>
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label">Nota de Envio (opcional)</label>
+              <label class="form-label" for="ret-envio">Nota de Envio (opcional)</label>
               <select id="ret-envio" class="form-control">
                 <option value="">Sem vínculo direto</option>
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label">Facção <span class="required">*</span></label>
+              <label class="form-label" for="ret-faccao">Facção <span class="required">*</span></label>
               <input id="ret-faccao" class="form-control" type="text" required placeholder="Nome da facção" />
             </div>
             <div class="form-group">
-              <label class="form-label">Data de Retorno <span class="required">*</span></label>
+              <label class="form-label" for="ret-data">Data de Retorno <span class="required">*</span></label>
               <input id="ret-data" class="form-control" type="date" required />
             </div>
             <div class="form-group">
-              <label class="form-label">Quantidade Recebida <span class="required">*</span></label>
+              <label class="form-label" for="ret-qtd">Quantidade Recebida <span class="required">*</span></label>
               <input id="ret-qtd" class="form-control" type="number" min="0" required placeholder="0" />
             </div>
             <div class="form-group">
-              <label class="form-label">Perdas</label>
+              <label class="form-label" for="ret-perdas">Perdas</label>
               <input id="ret-perdas" class="form-control" type="number" min="0" value="0" placeholder="0" />
             </div>
             <div class="form-group">
-              <label class="form-label">Avarias</label>
+              <label class="form-label" for="ret-avarias">Avarias</label>
               <input id="ret-avarias" class="form-control" type="number" min="0" value="0" placeholder="0" />
             </div>
             <div class="form-group">
-              <label class="form-label">Status Conferência</label>
+              <label class="form-label" for="ret-conf">Status Conferência</label>
               <select id="ret-conf" class="form-control">
                 <option value="pendente">Pendente</option>
                 <option value="conferido">Conferido</option>
@@ -186,11 +190,11 @@
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label">Responsável Conferência</label>
+              <label class="form-label" for="ret-resp">Responsável Conferência</label>
               <input id="ret-resp" class="form-control" type="text" placeholder="Nome" />
             </div>
             <div class="form-group form-span-full">
-              <label class="form-label">Observações</label>
+              <label class="form-label" for="ret-obs">Observações</label>
               <textarea id="ret-obs" class="form-control" placeholder="Anotações de conferência, não-conformidades..."></textarea>
             </div>
           </div>
@@ -205,13 +209,13 @@
       <div class="card">
         <div class="card-header">
           <div class="card-title">Retornos Registrados</div>
-          <button class="btn btn-outline btn-sm" onclick="loadRetornos()">↻</button>
+          <button class="btn btn-outline btn-sm" onclick="loadRetornos()" aria-label="Atualizar retornos">↻</button>
         </div>
         <div class="table-wrap">
           <table>
             <thead><tr>
-              <th>ORDEM DE PRODUÇÃO</th><th>Facção</th><th>Recebido</th><th>Perdas</th>
-              <th>Avarias</th><th>Data</th><th>Conferência</th><th>Responsável</th>
+              <th scope="col">ORDEM DE PRODUÇÃO</th><th scope="col">Facção</th><th scope="col">Recebido</th><th scope="col">Perdas</th>
+              <th scope="col">Avarias</th><th scope="col">Data</th><th scope="col">Conferência</th><th scope="col">Responsável</th>
             </tr></thead>
             <tbody id="retornos-tbody">
               <tr><td colspan="8"><div class="empty-state"><div class="spinner" style="margin:0 auto"></div></div></td></tr>
@@ -224,10 +228,10 @@
   </div>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="js/supabase.js"></script>
-<script src="js/pdf.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+<script src="js/supabase.js" defer></script>
+<script src="js/pdf.js" defer></script>
 <script>
 let _ops = [];
 
@@ -236,8 +240,10 @@ function setTab(tab) {
   document.getElementById('section-retorno').classList.toggle('hidden', tab !== 'retorno');
   document.getElementById('tab-envio').style.borderBottom = tab === 'envio' ? '2px solid var(--accent)' : 'none';
   document.getElementById('tab-envio').style.color = tab === 'envio' ? 'var(--accent)' : '';
+  document.getElementById('tab-envio').setAttribute('aria-selected', tab === 'envio');
   document.getElementById('tab-retorno').style.borderBottom = tab === 'retorno' ? '2px solid var(--accent)' : 'none';
   document.getElementById('tab-retorno').style.color = tab === 'retorno' ? 'var(--accent)' : '';
+  document.getElementById('tab-retorno').setAttribute('aria-selected', tab === 'retorno');
 }
 
 // Checar hash para tab inicial
