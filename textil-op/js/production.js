@@ -47,7 +47,7 @@ const ProdPage = {
       );
     }
     if (ops.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">Nenhuma OP encontrada</div><div class="empty-text">Crie sua primeira Ordem de Produção</div></div></td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">NENHUMA ORDEM DE PRODUÇÃO ENCONTRADA</div><div class="empty-text">Crie sua primeira Ordem de Produção</div></div></td></tr>`;
       return;
     }
     tbody.innerHTML = ops.map(op => `
@@ -62,9 +62,9 @@ const ProdPage = {
         <td>${fmtDate(op.created_at?.split('T')[0])}</td>
         <td>
           <div class="btn-group">
-            <button class="btn btn-outline btn-sm" onclick="ProdPage.verFicha('${op.id}')">📄 Ficha</button>
-            <button class="btn btn-outline btn-sm" onclick="ProdPage.editarOP('${op.id}')">✏️</button>
-            <button class="btn btn-danger btn-sm btn-icon" onclick="ProdPage.deletarOP('${op.id}','${op.numero_op}')">🗑</button>
+            <button class="btn btn-outline btn-sm" onclick="ProdPage.verFicha('${op.id}')">ABRIR FICHA</button>
+            <button class="btn btn-outline btn-sm" onclick="ProdPage.editarOP('${op.id}')">EDITAR OP</button>
+            <button class="btn btn-danger btn-sm btn-icon" onclick="ProdPage.deletarOP('${op.id}','${op.numero_op}')">X</button>
           </div>
         </td>
       </tr>`).join('');
@@ -138,10 +138,10 @@ const ProdPage = {
       showLoading('Salvando...');
       if (id) {
         await DB.update('ordens_producao', id, payload);
-        showToast(`OP ${payload.numero_op} atualizada!`, 'success');
+        showToast(`ORDEM DE PRODUÇÃO ${payload.numero_op} atualizada!`, 'success');
       } else {
         await DB.insert('ordens_producao', payload);
-        showToast(`OP ${payload.numero_op} criada com sucesso!`, 'success');
+        showToast(`ORDEM DE PRODUÇÃO ${payload.numero_op} criada com sucesso!`, 'success');
       }
       f.reset();
       document.getElementById('op-edit-id').value = '';
@@ -172,11 +172,11 @@ const ProdPage = {
       document.getElementById('prioridade').value = op.prioridade;
       document.getElementById('responsavel').value = op.responsavel;
       document.getElementById('obs-op').value = op.observacoes || '';
-      document.getElementById('form-title').textContent = `Editar OP: ${op.numero_op}`;
+      document.getElementById('form-title').textContent = `EDITAR ORDEM DE PRODUÇÃO: ${op.numero_op}`;
       document.getElementById('btn-cancelar').classList.remove('hidden');
       document.getElementById('form-op').scrollIntoView({ behavior: 'smooth' });
     } catch (e) {
-      showToast('Erro ao carregar OP: ' + e.message, 'error');
+      showToast('Erro ao carregar ORDEM DE PRODUÇÃO: ' + e.message, 'error');
     }
   },
 
@@ -190,10 +190,10 @@ const ProdPage = {
   },
 
   async deletarOP(id, num) {
-    if (!confirmar(`Excluir OP ${num}? Esta ação não pode ser desfeita.`)) return;
+    if (!confirmar(`Excluir ORDEM DE PRODUÇÃO ${num}? Esta ação não pode ser desfeita.`)) return;
     try {
       await DB.delete('ordens_producao', id);
-      showToast(`OP ${num} excluída.`, 'info');
+      showToast(`ORDEM DE PRODUÇÃO ${num} excluída.`, 'info');
       await this.loadOPs();
     } catch (e) {
       showToast('Não foi possível excluir: ' + e.message, 'error');
@@ -223,7 +223,7 @@ const ProdPage = {
       <div class="modal-box" style="max-width:820px">
         <div class="modal-header">
           <div>
-            <div class="modal-title">Ficha da OP: ${op.numero_op}</div>
+            <div class="modal-title">FICHA DA ORDEM DE PRODUÇÃO: ${op.numero_op}</div>
             <div class="card-subtitle">${op.modelo} — ${op.cor} / ${op.tamanho}</div>
           </div>
           <div class="btn-group">

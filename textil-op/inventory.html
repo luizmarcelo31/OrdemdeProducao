@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Consumo de Material — Gestão Têxtil</title>
-  <link rel="stylesheet" href="textil-op/css/style.css" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
@@ -17,15 +17,15 @@
   </div>
   <nav class="sidebar-nav">
     <div class="nav-section-label">Principal</div>
-    <a href="index.html" class="nav-link"><span class="nav-icon">⬡</span> Dashboard</a>
-    <a href="production.html" class="nav-link"><span class="nav-icon">📋</span> Ordens de Produção</a>
+    <a href="index.html" class="nav-link"><span class="nav-icon"></span> DASHBOARD</a>
+    <a href="production.html" class="nav-link"><span class="nav-icon"></span> ORDEM DE PRODUÇÃO</a>
     <div class="nav-section-label">Facção</div>
-    <a href="outsource.html" class="nav-link"><span class="nav-icon">🚚</span> Envio / Retorno</a>
+    <a href="outsource.html" class="nav-link"><span class="nav-icon"></span> ENVIO / RETORNO</a>
     <div class="nav-section-label">Operacional</div>
-    <a href="inventory.html" class="nav-link"><span class="nav-icon">📦</span> Consumo de Material</a>
-    <a href="entries.html" class="nav-link"><span class="nav-icon">✅</span> Entradas Finais</a>
+    <a href="inventory.html" class="nav-link"><span class="nav-icon"></span> CONSUMO DE MATERIAL</a>
+    <a href="entries.html" class="nav-link"><span class="nav-icon"></span> ENTRADAS FINAIS</a>
     <div class="nav-section-label">Relatórios</div>
-    <a href="reports.html" class="nav-link"><span class="nav-icon">📊</span> Relatórios & PDF</a>
+    <a href="reports.html" class="nav-link"><span class="nav-icon"></span> RELATÓRIOS & PDF</a>
   </nav>
   <div class="sidebar-footer">v1.0 · Sistema Têxtil</div>
 </aside>
@@ -40,15 +40,15 @@
       <div class="card-header">
         <div>
           <div class="card-title">Registrar Consumo de Material</div>
-          <div class="card-subtitle">Vincule o consumo de insumos a uma OP específica</div>
+          <div class="card-subtitle">Vincule o consumo de insumos a uma ORDEM DE PRODUÇÃO específica</div>
         </div>
       </div>
       <form id="form-consumo" novalidate>
         <div class="form-grid">
           <div class="form-group form-span-2">
-            <label class="form-label">OP Vinculada <span class="required">*</span></label>
+            <label class="form-label">ORDEM DE PRODUÇÃO VINCULADA <span class="required">*</span></label>
             <select id="cons-op" class="form-control" required>
-              <option value="">Selecione a OP...</option>
+              <option value="">Selecione a ORDEM DE PRODUÇÃO...</option>
             </select>
           </div>
           <div class="form-group form-span-2">
@@ -97,7 +97,7 @@
         </div>
         <hr class="divider" />
         <div class="btn-group">
-          <button type="submit" class="btn btn-primary btn-lg">💾 Registrar Consumo</button>
+          <button type="submit" class="btn btn-primary btn-lg">Registrar Consumo</button>
         </div>
       </form>
     </div>
@@ -108,7 +108,7 @@
         <div class="card-title">Histórico de Consumo</div>
         <div class="btn-group">
           <select id="filtro-cons-op" class="form-control" style="width:220px">
-            <option value="">Todas as OPs</option>
+            <option value="">TODAS AS ORDENS DE PRODUÇÃO</option>
           </select>
           <button class="btn btn-outline btn-sm" onclick="loadConsumos()">↻ Atualizar</button>
         </div>
@@ -116,7 +116,7 @@
       <div class="table-wrap">
         <table>
           <thead><tr>
-            <th>OP</th><th>Material</th><th>Qtd</th><th>Und</th>
+            <th>ORDEM DE PRODUÇÃO</th><th>Material</th><th>Qtd</th><th>Und</th>
             <th>Custo Unit.</th><th>Custo Total</th><th>Lote</th><th>Data</th><th>Responsável</th><th></th>
           </tr></thead>
           <tbody id="consumos-tbody">
@@ -129,7 +129,7 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="textil-op/js/supabase.js"></script>
+<script src="js/supabase.js"></script>
 <script>
 let _ops = [], _consumos = [];
 
@@ -138,7 +138,7 @@ async function loadOPsSelect() {
   const opts = _ops.map(o => `<option value="${o.id}">${o.numero_op} — ${o.modelo}</option>`).join('');
   ['cons-op', 'filtro-cons-op'].forEach(id => {
     const el = document.getElementById(id);
-    const pre = id === 'filtro-cons-op' ? '<option value="">Todas as OPs</option>' : '<option value="">Selecione a OP...</option>';
+    const pre = id === 'filtro-cons-op' ? '<option value="">TODAS AS ORDENS DE PRODUÇÃO</option>' : '<option value="">Selecione a ORDEM DE PRODUÇÃO...</option>';
     el.innerHTML = pre + opts;
   });
 }

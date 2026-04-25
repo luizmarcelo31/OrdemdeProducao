@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Relatórios & PDF — Gestão Têxtil</title>
-  <link rel="stylesheet" href="textil-op/css/style.css" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
@@ -17,15 +17,15 @@
   </div>
   <nav class="sidebar-nav">
     <div class="nav-section-label">Principal</div>
-    <a href="index.html" class="nav-link"><span class="nav-icon">⬡</span> Dashboard</a>
-    <a href="production.html" class="nav-link"><span class="nav-icon">📋</span> Ordens de Produção</a>
+    <a href="index.html" class="nav-link"><span class="nav-icon"></span> DASHBOARD</a>
+    <a href="production.html" class="nav-link"><span class="nav-icon"></span> ORDEM DE PRODUÇÃO</a>
     <div class="nav-section-label">Facção</div>
-    <a href="outsource.html" class="nav-link"><span class="nav-icon">🚚</span> Envio / Retorno</a>
+    <a href="outsource.html" class="nav-link"><span class="nav-icon"></span> ENVIO / RETORNO</a>
     <div class="nav-section-label">Operacional</div>
-    <a href="inventory.html" class="nav-link"><span class="nav-icon">📦</span> Consumo de Material</a>
-    <a href="entries.html" class="nav-link"><span class="nav-icon">✅</span> Entradas Finais</a>
+    <a href="inventory.html" class="nav-link"><span class="nav-icon"></span> CONSUMO DE MATERIAL</a>
+    <a href="entries.html" class="nav-link"><span class="nav-icon"></span> ENTRADAS FINAIS</a>
     <div class="nav-section-label">Relatórios</div>
-    <a href="reports.html" class="nav-link"><span class="nav-icon">📊</span> Relatórios & PDF</a>
+    <a href="reports.html" class="nav-link"><span class="nav-icon"></span> RELATÓRIOS & PDF</a>
   </nav>
   <div class="sidebar-footer">v1.0 · Sistema Têxtil</div>
 </aside>
@@ -41,23 +41,23 @@
     <div class="card">
       <div class="card-header">
         <div>
-          <div class="card-title">📄 Ficha de Produção por OP</div>
-          <div class="card-subtitle">Gera PDF completo com todos os dados da OP selecionada</div>
+          <div class="card-title"> FICHA DE PRODUÇÃO POR ORDEM DE PRODUÇÃO</div>
+          <div class="card-subtitle">Gera PDF completo com todos os dados da ORDEM DE PRODUÇÃO selecionada</div>
         </div>
       </div>
       <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap">
         <div class="form-group" style="flex:1;min-width:280px">
-          <label class="form-label">Selecione a OP</label>
+          <label class="form-label">SELECIONE A ORDEM DE PRODUÇÃO</label>
           <select id="sel-op-ficha" class="form-control">
             <option value="">Selecione uma Ordem de Produção...</option>
           </select>
         </div>
-        <button class="btn btn-primary btn-lg" onclick="gerarFichaOP()">📄 Gerar Ficha PDF</button>
+        <button class="btn btn-primary btn-lg" onclick="gerarFichaOP()"> Gerar Ficha PDF</button>
       </div>
       <div id="op-ficha-preview" class="hidden" style="margin-top:16px">
         <div style="background:var(--bg-elevated);border:1px solid var(--border-light);border-radius:8px;padding:14px 18px">
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
-            <div><div class="form-label">Nº OP</div><div id="fpr-op" class="td-mono" style="font-size:15px;color:var(--accent);margin-top:3px"></div></div>
+            <div><div class="form-label">Nº ORDEM DE PRODUÇÃO</div><div id="fpr-op" class="td-mono" style="font-size:15px;color:var(--accent);margin-top:3px"></div></div>
             <div><div class="form-label">Modelo</div><div id="fpr-modelo" style="font-weight:600;margin-top:3px"></div></div>
             <div><div class="form-label">Quantidade</div><div id="fpr-qtd" style="font-family:var(--font-mono);font-size:18px;margin-top:3px"></div></div>
             <div><div class="form-label">Status</div><div id="fpr-status" style="margin-top:3px"></div></div>
@@ -70,7 +70,7 @@
     <div class="card">
       <div class="card-header">
         <div>
-          <div class="card-title">🚚 Nota de Envio para Facção</div>
+          <div class="card-title"> Nota de Envio para Facção</div>
           <div class="card-subtitle">Gera PDF da nota de envio para entrega ao prestador</div>
         </div>
       </div>
@@ -81,7 +81,7 @@
             <option value="">Selecione uma nota...</option>
           </select>
         </div>
-        <button class="btn btn-primary btn-lg" onclick="gerarNotaEnvio()">📄 Gerar Nota PDF</button>
+        <button class="btn btn-primary btn-lg" onclick="gerarNotaEnvio()"> Gerar Nota PDF</button>
       </div>
     </div>
 
@@ -89,8 +89,8 @@
     <div class="card">
       <div class="card-header">
         <div>
-          <div class="card-title">📊 Relatório Geral de Movimentação</div>
-          <div class="card-subtitle">Visão consolidada de todas as OPs com filtro de período</div>
+          <div class="card-title"> Relatório Geral de Movimentação</div>
+          <div class="card-subtitle">Visão consolidada de todas as ORDENS DE PRODUÇÃO com filtro de período</div>
         </div>
       </div>
       <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap">
@@ -113,20 +113,20 @@
           <label class="form-label">Período — Até</label>
           <input id="rel-ate" class="form-control" type="date" />
         </div>
-        <button class="btn btn-primary btn-lg" onclick="gerarRelatorio()">📊 Gerar Relatório PDF</button>
+        <button class="btn btn-primary btn-lg" onclick="gerarRelatorio()"> Gerar Relatório PDF</button>
       </div>
     </div>
 
     <!-- Preview das OPs -->
     <div class="card">
       <div class="card-header">
-        <div class="card-title">OPs Carregadas</div>
+        <div class="card-title">ORDENS DE PRODUÇÃO CARREGADAS</div>
         <div id="ops-count-rel" class="card-subtitle"></div>
       </div>
       <div class="table-wrap">
         <table>
           <thead><tr>
-            <th>Nº OP</th><th>Data</th><th>Modelo</th><th>Qtd</th>
+            <th>Nº ORDEM DE PRODUÇÃO</th><th>Data</th><th>Modelo</th><th>Qtd</th>
             <th>Status</th><th>Prioridade</th><th>Responsável</th><th>PDF</th>
           </tr></thead>
           <tbody id="rel-tbody">
@@ -181,10 +181,10 @@ document.getElementById('sel-op-ficha').addEventListener('change', (e) => {
 });
 
 function renderRelTable(ops) {
-  document.getElementById('ops-count-rel').textContent = `${ops.length} OP(s)`;
+  document.getElementById('ops-count-rel').textContent = `${ops.length} ORDEM(ENS) DE PRODUÇÃO`;
   const tbody = document.getElementById('rel-tbody');
   if (!ops.length) {
-    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📊</div><div class="empty-title">Nenhuma OP encontrada</div></div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📊</div><div class="empty-title">NENHUMA ORDEM DE PRODUÇÃO ENCONTRADA</div></div></td></tr>`;
     return;
   }
   tbody.innerHTML = ops.map(op => `<tr>
@@ -195,7 +195,7 @@ function renderRelTable(ops) {
     <td>${statusBadge(op.status)}</td>
     <td>${prioridadeBadge(op.prioridade)}</td>
     <td>${op.responsavel}</td>
-    <td><button class="btn btn-outline btn-sm" onclick="gerarFichaOPById('${op.id}')">📄</button></td>
+    <td><button class="btn btn-outline btn-sm" onclick="gerarFichaOPById('${op.id}')">BAIXAR PDF</button></td>
   </tr>`).join('');
 }
 
@@ -217,7 +217,7 @@ function aplicarFiltros() {
 
 async function gerarFichaOP() {
   const opId = document.getElementById('sel-op-ficha').value;
-  if (!opId) return showToast('Selecione uma OP!', 'error');
+  if (!opId) return showToast('Selecione uma ORDEM DE PRODUÇÃO!', 'error');
   await gerarFichaOPById(opId);
 }
 
@@ -253,7 +253,7 @@ async function gerarRelatorio() {
   if (status) ops = ops.filter(o => o.status === status);
   if (de)  ops = ops.filter(o => o.data_op >= de);
   if (ate) ops = ops.filter(o => o.data_op <= ate);
-  if (!ops.length) return showToast('Nenhuma OP encontrada com esses filtros.', 'error');
+  if (!ops.length) return showToast('Nenhuma ORDEM DE PRODUÇÃO encontrada com esses filtros.', 'error');
   try {
     showLoading('Gerando relatório...');
     const doc = await PDFGen.gerarRelatorio(ops);

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Entradas Finais — Gestão Têxtil</title>
-  <link rel="stylesheet" href="textil-op/css/style.css" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
@@ -17,22 +17,22 @@
   </div>
   <nav class="sidebar-nav">
     <div class="nav-section-label">Principal</div>
-    <a href="index.html" class="nav-link"><span class="nav-icon">⬡</span> Dashboard</a>
-    <a href="production.html" class="nav-link"><span class="nav-icon">📋</span> Ordens de Produção</a>
+    <a href="index.html" class="nav-link"><span class="nav-icon">⬡</span> DASHBOARD</a>
+    <a href="production.html" class="nav-link"><span class="nav-icon"></span> ORDEM DE PRODUÇÃO</a>
     <div class="nav-section-label">Facção</div>
-    <a href="outsource.html" class="nav-link"><span class="nav-icon">🚚</span> Envio / Retorno</a>
+    <a href="outsource.html" class="nav-link"><span class="nav-icon"></span> ENVIO / RETORNO</a>
     <div class="nav-section-label">Operacional</div>
-    <a href="inventory.html" class="nav-link"><span class="nav-icon">📦</span> Consumo de Material</a>
-    <a href="entries.html" class="nav-link"><span class="nav-icon">✅</span> Entradas Finais</a>
+    <a href="inventory.html" class="nav-link"><span class="nav-icon"></span> CONSUMO DE MATERIAL</a>
+    <a href="entries.html" class="nav-link"><span class="nav-icon"></span> ENTRADAS FINAIS</a>
     <div class="nav-section-label">Relatórios</div>
-    <a href="reports.html" class="nav-link"><span class="nav-icon">📊</span> Relatórios & PDF</a>
+    <a href="reports.html" class="nav-link"><span class="nav-icon"></span> RELATÓRIOS & PDF</a>
   </nav>
   <div class="sidebar-footer">v1.0 · Sistema Têxtil</div>
 </aside>
 
 <main class="main-content">
   <div class="top-bar">
-    <span class="top-bar-title">Entradas de Produção <span class="top-bar-breadcrumb">/ Finalização de OP</span></span>
+    <span class="top-bar-title">Entradas de Produção <span class="top-bar-breadcrumb">/ FINALIZAÇÃO DE ORDEM DE PRODUÇÃO</span></span>
   </div>
 
   <div class="page-content">
@@ -47,9 +47,9 @@
       <form id="form-entrada" novalidate>
         <div class="form-grid">
           <div class="form-group form-span-2">
-            <label class="form-label">OP Vinculada <span class="required">*</span></label>
+            <label class="form-label">ORDEM DE PRODUÇÃO VINCULADA <span class="required">*</span></label>
             <select id="ent-op" class="form-control" required>
-              <option value="">Selecione a OP...</option>
+              <option value="">Selecione a ORDEM DE PRODUÇÃO...</option>
             </select>
           </div>
 
@@ -109,7 +109,7 @@
 
         <hr class="divider" />
         <div class="btn-group">
-          <button type="submit" class="btn btn-primary btn-lg">✅ Registrar Entrada Final</button>
+          <button type="submit" class="btn btn-primary btn-lg">Registrar Entrada Final</button>
         </div>
       </form>
     </div>
@@ -123,7 +123,7 @@
       <div class="table-wrap">
         <table>
           <thead><tr>
-            <th>OP</th><th>Modelo</th><th>Qtd Final</th><th>Rejeições</th>
+            <th>ORDEM DE PRODUÇÃO</th><th>Modelo</th><th>Qtd Final</th><th>Rejeições</th>
             <th>Eficiência</th><th>Data</th><th>Conferência</th><th>Responsável</th>
           </tr></thead>
           <tbody id="entradas-tbody">
@@ -136,14 +136,14 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="textil-op/js/supabase.js"></script>
+<script src="js/supabase.js"></script>
 <script>
 let _ops = [];
 
 async function loadOPsSelect() {
   _ops = await DB.list('ordens_producao', { order: { col: 'created_at', asc: false } });
   const sel = document.getElementById('ent-op');
-  sel.innerHTML = '<option value="">Selecione a OP...</option>' +
+  sel.innerHTML = '<option value="">Selecione a ORDEM DE PRODUÇÃO...</option>' +
     _ops.map(o => `<option value="${o.id}">${o.numero_op} — ${o.modelo} (${o.quantidade} pç)</option>`).join('');
 }
 
@@ -166,7 +166,7 @@ async function loadEntradas() {
   const ents = await DB.list('entradas_producao', { order: { col: 'data_entrada', asc: false } });
   const tbody = document.getElementById('entradas-tbody');
   if (!ents.length) {
-    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">✅</div><div class="empty-title">Nenhuma entrada registrada</div></div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon"></div><div class="empty-title">Nenhuma entrada registrada</div></div></td></tr>`;
     return;
   }
   const confClass = { aprovado: 'badge-green', reprovado: 'badge-red', pendente: 'badge-gray', aprovado_ressalvas: 'badge-orange' };

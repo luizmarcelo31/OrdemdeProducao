@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gestão Têxtil — Dashboard</title>
-  <link rel="stylesheet" href="textil-op/css/style.css" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
@@ -20,19 +20,19 @@
     </div>
   </div>
   <nav class="sidebar-nav">
-    <div class="nav-section-label">Principal</div>
-    <a href="index.html" class="nav-link"><span class="nav-icon">⬡</span> Dashboard</a>
-    <a href="production.html" class="nav-link"><span class="nav-icon">📋</span> Ordens de Produção</a>
+    <div class="nav-section-label">PRINCIPAL</div>
+    <a href="index.html" class="nav-link"><span class="nav-icon"></span> DASHBOARD</a>
+    <a href="production.html" class="nav-link"><span class="nav-icon"></span> ORDENS DE PRODUÇÃO</a>
 
-    <div class="nav-section-label">Facção</div>
-    <a href="outsource.html" class="nav-link"><span class="nav-icon">🚚</span> Envio / Retorno</a>
+    <div class="nav-section-label">FACÇÃO</div>
+    <a href="outsource.html" class="nav-link"><span class="nav-icon"></span> ENVIO / RETORNO</a>
 
-    <div class="nav-section-label">Operacional</div>
-    <a href="inventory.html" class="nav-link"><span class="nav-icon">📦</span> Consumo de Material</a>
-    <a href="entries.html" class="nav-link"><span class="nav-icon">✅</span> Entradas Finais</a>
+    <div class="nav-section-label">OPERACIONAL</div>
+    <a href="inventory.html" class="nav-link"><span class="nav-icon"></span> CONSUMO DE MATERIAL</a>
+    <a href="entries.html" class="nav-link"><span class="nav-icon"></span> ENTRADAS FINAIS</a>
 
-    <div class="nav-section-label">Relatórios</div>
-    <a href="reports.html" class="nav-link"><span class="nav-icon">📊</span> Relatórios & PDF</a>
+    <div class="nav-section-label">RELATÓRIOS</div>
+    <a href="reports.html" class="nav-link"><span class="nav-icon"></span> RELATÓRIOS & PDF</a>
   </nav>
   <div class="sidebar-footer">v1.0 · Sistema Têxtil</div>
 </aside>
@@ -41,7 +41,7 @@
 <main class="main-content">
   <div class="top-bar">
     <span class="top-bar-title">Dashboard <span class="top-bar-breadcrumb">/ Visão Geral</span></span>
-    <button class="btn btn-primary btn-sm" onclick="location.href='production.html'">+ Nova OP</button>
+    <button class="btn btn-primary btn-sm" onclick="location.href='production.html'">+ NOVA ORDEM DE PEDIDO</button>
   </div>
 
   <div class="page-content">
@@ -49,7 +49,7 @@
     <!-- KPIs -->
     <div class="kpi-grid" id="kpi-container">
       <div class="kpi-card">
-        <div class="kpi-label">Total de OPs</div>
+        <div class="kpi-label">TOTAL DE ORDENS DE PRODUÇÃO</div>
         <div class="kpi-value" id="kpi-total">—</div>
         <div class="kpi-sub">ordens cadastradas</div>
       </div>
@@ -88,7 +88,7 @@
         <table>
           <thead>
             <tr>
-              <th>Nº OP</th>
+              <th>Nº ORDEM DE PRODUÇÃO</th>
               <th>Data</th>
               <th>Modelo</th>
               <th>Qtd</th>
@@ -114,12 +114,12 @@
         <div class="card-title">Ações Rápidas</div>
       </div>
       <div class="btn-group">
-        <a href="production.html" class="btn btn-primary">📋 Nova OP</a>
-        <a href="outsource.html" class="btn btn-outline">🚚 Registrar Envio</a>
-        <a href="outsource.html#retorno" class="btn btn-outline">📥 Registrar Retorno</a>
-        <a href="inventory.html" class="btn btn-outline">📦 Consumo Material</a>
-        <a href="entries.html" class="btn btn-outline">✅ Entrada Final</a>
-        <a href="reports.html" class="btn btn-success">📄 Gerar Relatório PDF</a>
+        <a href="production.html" class="btn btn-primary"> NOVA ORDEM DE PEDIDO</a>
+        <a href="outsource.html" class="btn btn-outline">REGISTRAR ENVIO</a>
+        <a href="outsource.html#retorno" class="btn btn-outline">REGISTRAR RETORNO</a>
+        <a href="inventory.html" class="btn btn-outline">CONSUMO MATERIAL</a>
+        <a href="entries.html" class="btn btn-outline">ENTRADA FINAL</a>
+        <a href="reports.html" class="btn btn-success">GERAR RELATÓRIO PDF</a>
       </div>
     </div>
   </div>
@@ -128,8 +128,8 @@
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="textil-op/js/supabase.js"></script>
-<script src="textil-op/js/pdf.js"></script>
+<script src="js/supabase.js"></script>
+<script src="js/pdf.js"></script>
 <script>
 async function initDashboard() {
   try {
@@ -146,7 +146,7 @@ async function initDashboard() {
     // Tabela
     const tbody = document.getElementById('tb-recentes');
     if (ops.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">Nenhuma OP ainda</div><div class="empty-text"><a href="production.html">Crie a primeira OP</a></div></div></td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">NENHUMA ORDEM DE PRODUÇÃO AINDA</div><div class="empty-text"><a href="production.html">Crie a primeira ORDEM DE PRODUÇÃO</a></div></div></td></tr>`;
     } else {
       tbody.innerHTML = ops.map(op => `
         <tr>
@@ -165,7 +165,7 @@ async function initDashboard() {
     const urgentes = all.filter(o => o.prioridade === 'urgente' && o.status !== 'finalizada');
     const alertas = document.getElementById('alertas-container');
     if (urgentes.length > 0) {
-      alertas.innerHTML = `<div class="alert alert-warning">⚠ ${urgentes.length} OP(s) com prioridade URGENTE em aberto: ${urgentes.map(o => o.numero_op).join(', ')}</div>`;
+      alertas.innerHTML = `<div class="alert alert-warning">⚠ ${urgentes.length} ORDEM(ENS) DE PRODUÇÃO com prioridade URGENTE em aberto: ${urgentes.map(o => o.numero_op).join(', ')}</div>`;
     }
   } catch(e) {
     document.getElementById('tb-recentes').innerHTML = `<tr><td colspan="8"><div class="alert alert-error" style="margin:12px">⚠ Erro ao conectar ao Supabase. Verifique as configurações em js/supabase.js<br><small>${e.message}</small></div></td></tr>`;
