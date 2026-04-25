@@ -236,9 +236,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
   transition: all 0.15s;
   white-space: nowrap;
 }
-.btn-primary {
-  background: var(--accent); color: #0f1117;
-}
+.btn-primary { background: var(--accent); color: #0f1117; }
 .btn-primary:hover { background: var(--accent-dim); }
 
 .btn-outline {
@@ -248,9 +246,7 @@ textarea.form-control { resize: vertical; min-height: 80px; }
 }
 .btn-outline:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
 
-.btn-ghost {
-  background: transparent; color: var(--text-secondary);
-}
+.btn-ghost { background: transparent; color: var(--text-secondary); }
 .btn-ghost:hover { background: var(--bg-elevated); color: var(--text-primary); }
 
 .btn-danger {
@@ -277,14 +273,8 @@ textarea.form-control { resize: vertical; min-height: 80px; }
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
 }
-table {
-  width: 100%; border-collapse: collapse;
-  font-size: 15px;
-}
-thead tr {
-  background: var(--bg-elevated);
-  border-bottom: 1px solid var(--border);
-}
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+thead tr { background: var(--bg-elevated); border-bottom: 1px solid var(--border); }
 th {
   padding: 12px 16px;
   text-align: left;
@@ -412,10 +402,7 @@ tr:hover td { background: var(--bg-elevated); }
 }
 
 /* ---- EMPTY STATE ---- */
-.empty-state {
-  text-align: center; padding: 48px 24px;
-  color: var(--text-muted);
-}
+.empty-state { text-align: center; padding: 48px 24px; color: var(--text-muted); }
 .empty-state .empty-icon { font-size: 48px; margin-bottom: 14px; }
 .empty-state .empty-title { font-size: 16px; font-weight: 700; color: var(--text-secondary); margin-bottom: 6px; }
 .empty-state .empty-text  { font-size: 15px; }
@@ -444,217 +431,202 @@ tr:hover td { background: var(--bg-elevated); }
 .hidden { display: none !important; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
-/* ---- RESPONSIVO (MOBILE ONLY - max-width: 768px) ---- */
+/* ---- HAMBURGER (oculto no desktop) ---- */
+.btn-hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px; height: 40px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  color: var(--text-primary);
+  transition: background 0.15s;
+}
+.btn-hamburger:hover { background: var(--bg-card); }
+.btn-hamburger svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+/* ---- SIDEBAR OVERLAY (oculto no desktop) ---- */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  z-index: 99;
+  cursor: pointer;
+  backdrop-filter: blur(2px);
+}
+
+/* ============================================================
+   MOBILE — max-width: 768px
+   !! NÃO altera nenhum estilo acima desta linha !!
+   ============================================================ */
 @media (max-width: 768px) {
-  /* Sidebar - hidden by default on mobile */
-  .sidebar { transform: translateX(-100%); }
+
+  /* Prevenir overflow horizontal */
+  html, body { overflow-x: hidden; width: 100%; }
+
+  /* ---- Sidebar: drawer off-canvas ---- */
+  .sidebar {
+    transform: translateX(-100%);
+    z-index: 100;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  }
   .sidebar.open { transform: translateX(0); }
-  
-  /* Main content - full width without sidebar */
-  .main-content { margin-left: 0; }
-  
-  /* Page content - reduced padding for mobile */
-  .page-content { padding: 16px 12px; max-width: 100%; }
-  
-  /* Top bar - adjust for mobile */
-  .top-bar { 
-    padding: 0 12px; 
+  .sidebar-overlay.visible { display: block; }
+
+  /* ---- Main content: largura total ---- */
+  .main-content { margin-left: 0; width: 100%; }
+
+  /* ---- Top bar ---- */
+  .top-bar {
+    padding: 0 12px;
     height: auto;
     min-height: var(--header-h);
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 8px;
   }
-  .top-bar-title { 
-    font-size: clamp(14px, 4vw, 16px); 
+  .btn-hamburger { display: flex; }
+  .top-bar-title {
+    font-size: clamp(13px, 4vw, 16px);
     flex: 1;
     line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
-  .top-bar-breadcrumb { 
-    display: block; 
-    font-size: clamp(12px, 3vw, 13px); 
-    margin-left: 0; 
-    margin-top: 2px;
-  }
-  
-  /* Cards - full width with reduced padding */
-  .card { 
-    padding: 16px 14px; 
-    margin-bottom: 16px;
-    width: 100%;
-    max-width: 100%;
-  }
+  .top-bar-breadcrumb { display: none; }
+
+  /* ---- Page content ---- */
+  .page-content { padding: 14px 12px; max-width: 100%; }
+
+  /* ---- Cards ---- */
+  .card { padding: 16px 12px; margin-bottom: 14px; }
   .card-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
   }
-  .card-title { font-size: clamp(13px, 4vw, 15px); }
-  .card-subtitle { font-size: clamp(12px, 3vw, 13px); }
-  
-  /* KPI Grid - single column */
-  .kpi-grid { 
-    grid-template-columns: 1fr; 
-    gap: 12px;
-    margin-bottom: 20px;
-  }
-  .kpi-card { 
-    padding: 16px 14px; 
-  }
-  .kpi-value { font-size: clamp(28px, 8vw, 32px); }
-  .kpi-label { font-size: clamp(11px, 3vw, 12px); }
-  .kpi-sub { font-size: clamp(12px, 3vw, 13px); }
-  
-  /* Form Grid - single column */
-  .form-grid { 
-    grid-template-columns: 1fr; 
-    gap: 12px;
-  }
-  .form-grid-2, .form-grid-3 { grid-template-columns: 1fr; }
-  .form-span-2, .form-span-3 { grid-column: span 1; }
-  .form-span-full { grid-column: span 1; }
-  
-  /* Form controls - minimum 16px for touch */
-  .form-control { 
-    font-size: 16px; 
-    padding: 12px 14px;
-  }
-  .form-label { 
-    font-size: clamp(12px, 3.5vw, 13px); 
-  }
-  
-  /* Buttons - minimum 16px, full width on mobile when appropriate */
-  .btn { 
-    font-size: clamp(13px, 4vw, 14px);
-    padding: 12px 18px;
-  }
-  .btn-sm { 
-    font-size: clamp(11px, 3vw, 12px);
-    padding: 10px 14px;
-  }
-  .btn-lg { 
-    font-size: clamp(14px, 4vw, 16px);
-    padding: 14px 24px;
-  }
-  
-  /* Button groups - stack on mobile */
-  .btn-group { 
-    flex-direction: column; 
+  .card-title { font-size: clamp(12px, 4vw, 14px); }
+  .card-subtitle { font-size: clamp(11px, 3vw, 13px); }
+
+  /* ---- KPI: 2 colunas ---- */
+  .kpi-grid {
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
+    margin-bottom: 14px;
+  }
+  .kpi-card { padding: 14px 12px; }
+  .kpi-value { font-size: clamp(22px, 7vw, 28px); margin: 6px 0 3px; }
+  .kpi-label { font-size: clamp(9px, 2.5vw, 11px); }
+  .kpi-sub { font-size: clamp(10px, 2.5vw, 12px); }
+
+  /* ---- Form grid: coluna única ---- */
+  .form-grid,
+  .form-grid-2,
+  .form-grid-3 { grid-template-columns: 1fr; gap: 10px; }
+  .form-span-2, .form-span-3, .form-span-full { grid-column: span 1; }
+
+  /* Inputs: 16px previne zoom automático no iOS */
+  .form-control { font-size: 16px; padding: 12px 12px; }
+  .form-label { font-size: clamp(11px, 3.5vw, 13px); }
+
+  /* ---- Botões ---- */
+  .btn { font-size: clamp(13px, 4vw, 14px); padding: 12px 16px; }
+  .btn-sm { font-size: clamp(11px, 3vw, 12px); padding: 9px 12px; }
+  .btn-lg { font-size: clamp(13px, 4vw, 15px); padding: 13px 20px; }
+
+  /* Btn-groups dentro de form e page-content: coluna */
+  .page-content > .btn-group,
+  form .btn-group {
+    flex-direction: column;
+    gap: 8px;
     width: 100%;
   }
-  .btn-group .btn {
-    width: 100%;
-    justify-content: center;
-  }
+  .page-content > .btn-group .btn,
+  form .btn-group .btn { width: 100%; justify-content: center; }
+
+  /* Card-header btn-groups: linha com wrap */
   .card-header .btn-group {
     flex-direction: row;
     flex-wrap: wrap;
-  }
-  .card-header .btn-group .btn {
-    width: auto;
-  }
-  
-  /* Tables - horizontal scroll */
-  .table-wrap {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  table { 
-    font-size: clamp(13px, 4vw, 14px);
-    min-width: 600px;
-  }
-  th { 
-    font-size: clamp(10px, 3vw, 11px);
-    padding: 10px 12px;
-    white-space: nowrap;
-  }
-  td { 
-    padding: 10px 12px;
-  }
-  
-  /* Badges - smaller on mobile */
-  .badge {
-    font-size: clamp(10px, 3vw, 11px);
-    padding: 3px 8px;
-  }
-  
-  /* Alerts - adjust padding */
-  .alert {
-    font-size: clamp(12px, 3.5vw, 13px);
-    padding: 10px 14px;
-  }
-  
-  /* Modal - full screen on mobile */
-  .modal-overlay { padding: 10px; }
-  .modal-box { 
-    max-height: 95vh;
     width: 100%;
+    gap: 6px;
   }
-  .modal-header { padding: 14px 16px; }
-  .modal-title { font-size: clamp(15px, 5vw, 17px); }
-  .modal-body { padding: 16px; }
-  .modal-footer { 
-    padding: 12px 16px;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .modal-footer .btn {
-    width: 100%;
-  }
-  
-  /* Empty state - reduced padding */
-  .empty-state { 
-    padding: 32px 16px;
-  }
-  .empty-state .empty-icon { font-size: 36px; }
-  .empty-state .empty-title { font-size: clamp(14px, 4vw, 16px); }
-  .empty-state .empty-text { font-size: clamp(13px, 4vw, 14px); }
-  
-  /* Toast notifications - adjust position */
-  #toast-container {
-    left: 12px;
-    right: 12px;
-    bottom: 12px;
-  }
-  .toast {
-    min-width: auto;
-    width: 100%;
-  }
-  
-  /* Tab buttons in outsource page */
-  [role="tablist"] {
-    flex-wrap: wrap;
-    margin-bottom: 16px;
-  }
-  [role="tablist"] button {
-    flex: 1;
-    min-width: 120px;
-    font-size: clamp(12px, 4vw, 13px);
-    padding: 10px 14px;
-  }
-  
-  /* Inline styles overrides for mobile */
-  .card-header .btn-group .form-control {
+  .card-header .btn-group .btn { width: auto; }
+
+  /* Inputs/selects com width inline dentro de card-header */
+  .card-header .btn-group .form-control,
+  .card-header .form-control[style] {
     width: 100% !important;
     max-width: 100% !important;
+    flex: 1 1 120px;
   }
-  
-  /* Preview grids - single column */
-  #op-preview [style*="grid-template-columns"],
-  #op-ficha-preview [style*="grid-template-columns"] {
+
+  /* Top-bar btn-group: linha */
+  .top-bar .btn-group { flex-direction: row; flex-wrap: wrap; width: auto; }
+
+  /* ---- Tabelas ---- */
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { font-size: clamp(12px, 3.5vw, 14px); min-width: 540px; }
+  th { font-size: clamp(9px, 2.5vw, 11px); padding: 9px 10px; white-space: nowrap; }
+  td { padding: 9px 10px; }
+
+  /* ---- Badges ---- */
+  .badge { font-size: clamp(9px, 2.5vw, 11px); padding: 3px 7px; }
+
+  /* ---- Alerts ---- */
+  .alert { font-size: clamp(12px, 3.5vw, 13px); padding: 10px 12px; }
+
+  /* ---- Modal ---- */
+  .modal-overlay { padding: 8px; align-items: flex-end; }
+  .modal-box { max-height: 92vh; width: 100%; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+  .modal-header { padding: 14px 16px; }
+  .modal-title { font-size: clamp(14px, 5vw, 17px); }
+  .modal-body { padding: 14px; }
+  .modal-footer { padding: 12px 14px; flex-direction: column; gap: 8px; }
+  .modal-footer .btn { width: 100%; }
+
+  /* ---- Empty state ---- */
+  .empty-state { padding: 28px 14px; }
+  .empty-state .empty-icon { font-size: 34px; }
+  .empty-state .empty-title { font-size: clamp(13px, 4vw, 15px); }
+  .empty-state .empty-text { font-size: clamp(12px, 3.5vw, 14px); }
+
+  /* ---- Toast ---- */
+  #toast-container { left: 10px; right: 10px; bottom: 10px; }
+  .toast { min-width: auto; width: 100%; font-size: 13px; }
+
+  /* ---- Tabs (outsource) ---- */
+  [role="tablist"] { flex-wrap: wrap; margin-bottom: 14px; }
+  [role="tablist"] button {
+    flex: 1; min-width: 100px;
+    font-size: clamp(12px, 4vw, 13px);
+    padding: 10px 12px;
+  }
+
+  /* ---- Reports: divs flex com inline style ---- */
+  .card > div[style*="display:flex"],
+  .card > div[style*="display: flex"] {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+  .card > div[style*="display:flex"] .form-group,
+  .card > div[style*="display: flex"] .form-group {
+    width: 100% !important;
+    min-width: auto !important;
+  }
+  .card > div[style*="display:flex"] > .btn,
+  .card > div[style*="display: flex"] > .btn { width: 100% !important; }
+
+  /* ---- Preview grids (entries / reports) ---- */
+  #op-preview > div,
+  #op-ficha-preview > div > div {
+    display: grid !important;
     grid-template-columns: 1fr 1fr !important;
     gap: 10px !important;
-  }
-  
-  /* Ensure no horizontal overflow */
-  body, html {
-    overflow-x: hidden;
-    width: 100%;
-  }
-  
-  /* Fix any fixed width elements */
-  *[style*="width:"][style*="px"] {
-    max-width: 100% !important;
-    width: auto !important;
   }
 }

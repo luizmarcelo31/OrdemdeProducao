@@ -33,9 +33,13 @@
   </nav>
   <div class="sidebar-footer">v1.0 · Sistema Têxtil</div>
 </aside>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
 
 <main class="main-content">
   <div class="top-bar">
+    <button class="btn-hamburger" aria-label="Abrir menu" onclick="openSidebar()">
+      <svg viewBox="0 0 20 20"><line x1="2" y1="5" x2="18" y2="5"/><line x1="2" y1="10" x2="18" y2="10"/><line x1="2" y1="15" x2="18" y2="15"/></svg>
+    </button>
     <span class="top-bar-title">Controle de Facção <span class="top-bar-breadcrumb">/ ENVIO & RETORNO</span></span>
     <div class="btn-group">
       <button class="btn btn-outline btn-sm" onclick="setTab('envio')"> ENVIO</button>
@@ -416,6 +420,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('envio-data').value = new Date().toISOString().split('T')[0];
   document.getElementById('ret-data').value = new Date().toISOString().split('T')[0];
 });
+</script>
+<script>
+function openSidebar(){document.querySelector('.sidebar').classList.add('open');document.getElementById('sidebar-overlay').classList.add('visible');}
+function closeSidebar(){document.querySelector('.sidebar').classList.remove('open');document.getElementById('sidebar-overlay').classList.remove('visible');}
+document.querySelectorAll('.nav-link').forEach(l=>l.addEventListener('click',closeSidebar));
 </script>
 </body>
 </html>
