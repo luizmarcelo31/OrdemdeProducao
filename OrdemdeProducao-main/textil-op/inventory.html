@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Registro de consumo de material por ordem de produção" />
+  <title>Consumo de Material — Gestão Têxtil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<aside class="sidebar" aria-label="Menu de navegação">
+  <div class="sidebar-logo">
+    <div class="logo-mark">
+      <div class="logo-icon">GT</div>
+      <div><div class="logo-text">Gestão Têxtil</div><div class="logo-sub">Controle de Produção</div></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Principal</div>
+    <a href="index.html" class="nav-link"><span class="nav-icon"></span> DASHBOARD</a>
+    <a href="production.html" class="nav-link"><span class="nav-icon"></span> ORDEM DE PRODUÇÃO</a>
+    <div class="nav-section-label">Facção</div>
+    <a href="outsource.html" class="nav-link"><span class="nav-icon"></span> ENVIO / RETORNO</a>
+    <div class="nav-section-label">Operacional</div>
+    <a href="inventory.html" class="nav-link"><span class="nav-icon"></span> CONSUMO DE MATERIAL</a>
+    <a href="entries.html" class="nav-link"><span class="nav-icon"></span> ENTRADAS FINAIS</a>
+    <div class="nav-section-label">Relatórios</div>
+    <a href="reports.html" class="nav-link"><span class="nav-icon"></span> RELATÓRIOS & PDF</a>
+  </nav>
+  <div class="sidebar-footer">v1.0 · Sistema Têxtil</div>
+</aside>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<main class="main-content">
+  <div class="top-bar">
+    <button class="btn-hamburger" aria-label="Abrir menu" onclick="openSidebar()">
+      <svg viewBox="0 0 20 20"><line x1="2" y1="5" x2="18" y2="5"/><line x1="2" y1="10" x2="18" y2="10"/><line x1="2" y1="15" x2="18" y2="15"/></svg>
+    </button>
+    <span class="top-bar-title">Consumo de Material <span class="top-bar-breadcrumb">/ Movimentação Operacional</span></span>
+  </div>
+
+  <div class="page-content">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Registrar Consumo de Material</div>
+          <div class="card-subtitle">Vincule o consumo de insumos a uma ORDEM DE PRODUÇÃO específica</div>
+        </div>
+      </div>
+      <form id="form-consumo" novalidate>
+        <div class="form-grid">
+          <div class="form-group form-span-2">
+            <label class="form-label" for="cons-op">ORDEM DE PRODUÇÃO VINCULADA <span class="required">*</span></label>
+            <select id="cons-op" class="form-control" required>
+              <option value="">Selecione a ORDEM DE PRODUÇÃO...</option>
+            </select>
+          </div>
+          <div class="form-group form-span-2">
+            <label class="form-label" for="cons-material">Material / Insumo <span class="required">*</span></label>
+            <input id="cons-material" class="form-control" type="text" required placeholder="Ex: Tecido malha algodão, Linha nº 60, Botão 2 furos..." />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cons-qtd">Quantidade <span class="required">*</span></label>
+            <input id="cons-qtd" class="form-control" type="number" step="0.001" min="0.001" required placeholder="0.000" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cons-unidade">Unidade <span class="required">*</span></label>
+            <select id="cons-unidade" class="form-control" required>
+              <option value="m">m — metro</option>
+              <option value="m2">m² — metro quadrado</option>
+              <option value="kg">kg — quilograma</option>
+              <option value="g">g — grama</option>
+              <option value="un">un — unidade</option>
+              <option value="rolo">rolo</option>
+              <option value="L">L — litro</option>
+              <option value="ml">ml — mililitro</option>
+              <option value="cx">cx — caixa</option>
+              <option value="pc">pc — peça</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cons-custo">Custo Unitário (R$)</label>
+            <input id="cons-custo" class="form-control" type="number" step="0.01" min="0" placeholder="0,00" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cons-lote">Lote / Referência</label>
+            <input id="cons-lote" class="form-control" type="text" placeholder="Lote do material" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cons-data">Data do Consumo <span class="required">*</span></label>
+            <input id="cons-data" class="form-control" type="date" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cons-resp">Responsável <span class="required">*</span></label>
+            <input id="cons-resp" class="form-control" type="text" required placeholder="Nome" />
+          </div>
+          <div class="form-group form-span-full">
+            <label class="form-label" for="cons-obs">Observações</label>
+            <textarea id="cons-obs" class="form-control" placeholder="Sobra, desperdício, destino específico..."></textarea>
+          </div>
+        </div>
+        <hr class="divider" />
+        <div class="btn-group">
+          <button type="submit" class="btn btn-primary btn-lg">Registrar Consumo</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Filtro por OP -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Histórico de Consumo</div>
+        <div class="btn-group">
+          <label for="filtro-cons-op" class="sr-only">Filtrar por ordem de produção</label>
+          <select id="filtro-cons-op" class="form-control" style="width:220px">
+            <option value="">TODAS AS ORDENS DE PRODUÇÃO</option>
+          </select>
+          <button class="btn btn-outline btn-sm" onclick="loadConsumos()" aria-label="Atualizar consumo">↻ Atualizar</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th scope="col">ORDEM DE PRODUÇÃO</th><th scope="col">Material</th><th scope="col">Qtd</th><th scope="col">Und</th>
+            <th scope="col">Custo Unit.</th><th scope="col">Custo Total</th><th scope="col">Lote</th><th scope="col">Data</th><th scope="col">Responsável</th><th scope="col" class="sr-only">Ações</th>
+          </tr></thead>
+          <tbody id="consumos-tbody">
+            <tr><td colspan="10"><div class="empty-state"><div class="spinner" style="margin:0 auto"></div></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+<script src="js/supabase.js" defer></script>
+<script>
+let _ops = [], _consumos = [];
+
+async function loadOPsSelect() {
+  _ops = await DB.list('ordens_producao', { order: { col: 'numero_op', asc: true } });
+  const opts = _ops.map(o => `<option value="${o.id}">${o.numero_op} — ${o.modelo}</option>`).join('');
+  ['cons-op', 'filtro-cons-op'].forEach(id => {
+    const el = document.getElementById(id);
+    const pre = id === 'filtro-cons-op' ? '<option value="">TODAS AS ORDENS DE PRODUÇÃO</option>' : '<option value="">Selecione a ORDEM DE PRODUÇÃO...</option>';
+    el.innerHTML = pre + opts;
+  });
+}
+
+async function loadConsumos() {
+  const opFilter = document.getElementById('filtro-cons-op').value;
+  _consumos = await DB.list('consumo_material', { order: { col: 'data_consumo', asc: false } });
+  const shown = opFilter ? _consumos.filter(c => c.op_id === opFilter) : _consumos;
+  const tbody = document.getElementById('consumos-tbody');
+  if (!shown.length) {
+    tbody.innerHTML = `<tr><td colspan="10"><div class="empty-state"><div class="empty-icon">📦</div><div class="empty-title">Nenhum consumo registrado</div></div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = shown.map(c => {
+    const op = _ops.find(o => o.id === c.op_id);
+    const total = c.custo_unitario ? (c.quantidade * c.custo_unitario).toFixed(2) : '—';
+    return `<tr>
+      <td class="td-mono">${op?.numero_op || '—'}</td>
+      <td><strong>${c.material}</strong></td>
+      <td class="td-mono">${c.quantidade}</td><td>${c.unidade}</td>
+      <td>${c.custo_unitario ? 'R$ ' + parseFloat(c.custo_unitario).toFixed(2) : '—'}</td>
+      <td>${total !== '—' ? 'R$ ' + total : '—'}</td>
+      <td>${c.lote || '—'}</td>
+      <td>${fmtDate(c.data_consumo)}</td>
+      <td>${c.responsavel}</td>
+      <td><button class="btn btn-danger btn-sm btn-icon" onclick="deletarConsumo('${c.id}')">🗑</button></td>
+    </tr>`;
+  }).join('');
+}
+
+document.getElementById('filtro-cons-op').addEventListener('change', loadConsumos);
+
+document.getElementById('form-consumo').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const payload = {
+    op_id: document.getElementById('cons-op').value,
+    material: document.getElementById('cons-material').value.trim(),
+    quantidade: parseFloat(document.getElementById('cons-qtd').value),
+    unidade: document.getElementById('cons-unidade').value,
+    custo_unitario: parseFloat(document.getElementById('cons-custo').value) || null,
+    lote: document.getElementById('cons-lote').value.trim() || null,
+    data_consumo: document.getElementById('cons-data').value,
+    responsavel: document.getElementById('cons-resp').value.trim(),
+    observacoes: document.getElementById('cons-obs').value.trim() || null,
+  };
+  if (!payload.op_id || !payload.material || !payload.quantidade) {
+    return showToast('Preencha os campos obrigatórios!', 'error');
+  }
+  try {
+    showLoading('Salvando...');
+    await DB.insert('consumo_material', payload);
+    showToast('Consumo registrado!', 'success');
+    e.target.reset();
+    document.getElementById('cons-data').value = new Date().toISOString().split('T')[0];
+    await loadConsumos();
+  } catch(err) { showToast('Erro: ' + err.message, 'error'); }
+  finally { hideLoading(); }
+});
+
+async function deletarConsumo(id) {
+  const msg = `⚠️ AVISO CRÍTICO: Você está prestes a excluir este registro de consumo de material.\n\nEsta ação não pode ser desfeita. Deseja realmente prosseguir?`;
+  if (!confirmar(msg)) return;
+  try {
+    await DB.delete('consumo_material', id);
+    showToast('Registro de consumo excluído.', 'info');
+    await loadConsumos();
+  } catch(e) { showToast('Erro: ' + e.message, 'error'); }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadOPsSelect();
+  await loadConsumos();
+  document.getElementById('cons-data').value = new Date().toISOString().split('T')[0];
+});
+</script>
+</body>
+</html>

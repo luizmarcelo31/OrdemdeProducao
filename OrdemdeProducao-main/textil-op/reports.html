@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Geração de relatórios e PDFs de produção" />
+  <title>Relatórios & PDF — Gestão Têxtil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<aside class="sidebar" aria-label="Menu de navegação">
+  <div class="sidebar-logo">
+    <div class="logo-mark">
+      <div class="logo-icon">GT</div>
+      <div><div class="logo-text">Gestão Têxtil</div><div class="logo-sub">Controle de Produção</div></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Principal</div>
+    <a href="index.html" class="nav-link"><span class="nav-icon"></span> DASHBOARD</a>
+    <a href="production.html" class="nav-link"><span class="nav-icon"></span> ORDEM DE PRODUÇÃO</a>
+    <div class="nav-section-label">Facção</div>
+    <a href="outsource.html" class="nav-link"><span class="nav-icon"></span> ENVIO / RETORNO</a>
+    <div class="nav-section-label">Operacional</div>
+    <a href="inventory.html" class="nav-link"><span class="nav-icon"></span> CONSUMO DE MATERIAL</a>
+    <a href="entries.html" class="nav-link"><span class="nav-icon"></span> ENTRADAS FINAIS</a>
+    <div class="nav-section-label">Relatórios</div>
+    <a href="reports.html" class="nav-link"><span class="nav-icon"></span> RELATÓRIOS & PDF</a>
+  </nav>
+  <div class="sidebar-footer">v1.0 · Sistema Têxtil</div>
+</aside>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<main class="main-content">
+  <div class="top-bar">
+    <button class="btn-hamburger" aria-label="Abrir menu" onclick="openSidebar()">
+      <svg viewBox="0 0 20 20"><line x1="2" y1="5" x2="18" y2="5"/><line x1="2" y1="10" x2="18" y2="10"/><line x1="2" y1="15" x2="18" y2="15"/></svg>
+    </button>
+    <span class="top-bar-title">Relatórios & PDF <span class="top-bar-breadcrumb">/ Geração de Documentos</span></span>
+  </div>
+
+  <div class="page-content">
+
+    <!-- Geração por OP específica -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title"> FICHA DE PRODUÇÃO POR ORDEM DE PRODUÇÃO</div>
+          <div class="card-subtitle">Gera PDF completo com todos os dados da ORDEM DE PRODUÇÃO selecionada</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap">
+        <div class="form-group" style="flex:1;min-width:280px">
+          <label class="form-label" for="sel-op-ficha">SELECIONE A ORDEM DE PRODUÇÃO</label>
+          <select id="sel-op-ficha" class="form-control">
+            <option value="">Selecione uma Ordem de Produção...</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-lg" onclick="gerarFichaOP()"> Gerar Ficha PDF</button>
+      </div>
+      <div id="op-ficha-preview" class="hidden" style="margin-top:16px">
+        <div style="background:var(--bg-elevated);border:1px solid var(--border-light);border-radius:8px;padding:14px 18px">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
+            <div><div class="form-label">Nº ORDEM DE PRODUÇÃO</div><div id="fpr-op" class="td-mono" style="font-size:15px;color:var(--accent);margin-top:3px"></div></div>
+            <div><div class="form-label">Modelo</div><div id="fpr-modelo" style="font-weight:600;margin-top:3px"></div></div>
+            <div><div class="form-label">Quantidade</div><div id="fpr-qtd" style="font-family:var(--font-mono);font-size:18px;margin-top:3px"></div></div>
+            <div><div class="form-label">Status</div><div id="fpr-status" style="margin-top:3px"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nota de Envio -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title"> Nota de Envio para Facção</div>
+          <div class="card-subtitle">Gera PDF da nota de envio para entrega ao prestador</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap">
+        <div class="form-group" style="flex:1;min-width:280px">
+          <label class="form-label" for="sel-nota-envio">Selecione a Nota de Envio</label>
+          <select id="sel-nota-envio" class="form-control">
+            <option value="">Selecione uma nota...</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-lg" onclick="gerarNotaEnvio()"> Gerar Nota PDF</button>
+      </div>
+    </div>
+
+    <!-- Relatório Geral -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title"> Relatório Geral de Movimentação</div>
+          <div class="card-subtitle">Visão consolidada de todas as ORDENS DE PRODUÇÃO com filtro de período</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap">
+        <div class="form-group">
+          <label class="form-label" for="rel-status">Status (filtro)</label>
+          <select id="rel-status" class="form-control">
+            <option value="">Todos os status</option>
+            <option value="aberta">Abertas</option>
+            <option value="em_producao">Em Produção</option>
+            <option value="aguardando_retorno">Ag. Retorno</option>
+            <option value="finalizada">Finalizadas</option>
+            <option value="cancelada">Canceladas</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="rel-de">Período — De</label>
+          <input id="rel-de" class="form-control" type="date" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="rel-ate">Período — Até</label>
+          <input id="rel-ate" class="form-control" type="date" />
+        </div>
+        <button class="btn btn-primary btn-lg" onclick="gerarRelatorio()"> Gerar Relatório PDF</button>
+      </div>
+    </div>
+
+    <!-- Preview das OPs -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">ORDENS DE PRODUÇÃO CARREGADAS</div>
+        <div id="ops-count-rel" class="card-subtitle"></div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th scope="col">Nº ORDEM DE PRODUÇÃO</th><th scope="col">Data</th><th scope="col">Modelo</th><th scope="col">Qtd</th>
+            <th scope="col">Status</th><th scope="col">Prioridade</th><th scope="col">Responsável</th><th scope="col">PDF</th>
+          </tr></thead>
+          <tbody id="rel-tbody">
+            <tr><td colspan="8"><div class="empty-state"><div class="spinner" style="margin:0 auto"></div></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+<script src="js/supabase.js" defer></script>
+<script src="js/pdf.js" defer></script>
+<script>
+let _ops = [], _envios = [];
+
+async function loadData() {
+  _ops = await DB.list('ordens_producao', { order: { col: 'created_at', asc: false } });
+  _envios = await DB.list('notas_envio_faccao', { order: { col: 'created_at', asc: false } });
+
+  // Select OP ficha
+  const selFicha = document.getElementById('sel-op-ficha');
+  selFicha.innerHTML = '<option value="">Selecione uma Ordem de Produção...</option>' +
+    _ops.map(o => `<option value="${o.id}">[${STATUS_LABELS[o.status]||o.status}] ${o.numero_op} — ${o.modelo}</option>`).join('');
+
+  // Select notas envio
+  const selNota = document.getElementById('sel-nota-envio');
+  selNota.innerHTML = '<option value="">Selecione uma nota...</option>' +
+    _envios.map(e => {
+      const op = _ops.find(o => o.id === e.op_id);
+      return `<option value="${e.id}">${e.numero_nota} — ${e.nome_faccao} (${op?.numero_op || '?'})</option>`;
+    }).join('');
+
+  renderRelTable(_ops);
+}
+
+document.getElementById('sel-op-ficha').addEventListener('change', (e) => {
+  const op = _ops.find(o => o.id === e.target.value);
+  const prev = document.getElementById('op-ficha-preview');
+  if (op) {
+    document.getElementById('fpr-op').textContent = op.numero_op;
+    document.getElementById('fpr-modelo').textContent = `${op.modelo} — ${op.cor} / ${op.tamanho}`;
+    document.getElementById('fpr-qtd').textContent = op.quantidade + ' pç';
+    document.getElementById('fpr-status').innerHTML = statusBadge(op.status);
+    prev.classList.remove('hidden');
+  } else {
+    prev.classList.add('hidden');
+  }
+});
+
+function renderRelTable(ops) {
+  document.getElementById('ops-count-rel').textContent = `${ops.length} ORDEM(ENS) DE PRODUÇÃO`;
+  const tbody = document.getElementById('rel-tbody');
+  if (!ops.length) {
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📊</div><div class="empty-title">NENHUMA ORDEM DE PRODUÇÃO ENCONTRADA</div></div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = ops.map(op => `<tr>
+    <td class="td-mono">${op.numero_op}</td>
+    <td>${fmtDate(op.data_op)}</td>
+    <td><strong>${op.modelo}</strong><br><small class="text-muted">${op.cor} / ${op.tamanho}</small></td>
+    <td>${op.quantidade}</td>
+    <td>${statusBadge(op.status)}</td>
+    <td>${prioridadeBadge(op.prioridade)}</td>
+    <td>${op.responsavel}</td>
+    <td><button class="btn btn-outline btn-sm" onclick="gerarFichaOPById('${op.id}')">BAIXAR PDF</button></td>
+  </tr>`).join('');
+}
+
+// Filtros relatório
+['rel-status','rel-de','rel-ate'].forEach(id => {
+  document.getElementById(id).addEventListener('change', aplicarFiltros);
+});
+
+function aplicarFiltros() {
+  const status = document.getElementById('rel-status').value;
+  const de = document.getElementById('rel-de').value;
+  const ate = document.getElementById('rel-ate').value;
+  let filtered = _ops;
+  if (status) filtered = filtered.filter(o => o.status === status);
+  if (de)  filtered = filtered.filter(o => o.data_op >= de);
+  if (ate) filtered = filtered.filter(o => o.data_op <= ate);
+  renderRelTable(filtered);
+}
+
+async function gerarFichaOP() {
+  const opId = document.getElementById('sel-op-ficha').value;
+  if (!opId) return showToast('Selecione uma ORDEM DE PRODUÇÃO!', 'error');
+  await gerarFichaOPById(opId);
+}
+
+async function gerarFichaOPById(opId) {
+  try {
+    showLoading('Buscando dados...');
+    const data = await DB.getOpFull(opId);
+    showLoading('Gerando PDF...');
+    const doc = await PDFGen.gerarFichaOP(data);
+    PDFGen.baixar(doc, `Ficha_OP_${data.op.numero_op}.pdf`);
+  } catch(e) { showToast('Erro: ' + e.message, 'error'); }
+  finally { hideLoading(); }
+}
+
+async function gerarNotaEnvio() {
+  const envioId = document.getElementById('sel-nota-envio').value;
+  if (!envioId) return showToast('Selecione uma nota de envio!', 'error');
+  try {
+    showLoading('Gerando PDF...');
+    const envio = await DB.get('notas_envio_faccao', envioId);
+    const op = _ops.find(o => o.id === envio.op_id) || {};
+    const doc = await PDFGen.gerarNotaEnvio(envio, op);
+    PDFGen.baixar(doc, `Nota_Envio_${envio.numero_nota}.pdf`);
+  } catch(e) { showToast('Erro: ' + e.message, 'error'); }
+  finally { hideLoading(); }
+}
+
+async function gerarRelatorio() {
+  const status = document.getElementById('rel-status').value;
+  const de = document.getElementById('rel-de').value;
+  const ate = document.getElementById('rel-ate').value;
+  let ops = _ops;
+  if (status) ops = ops.filter(o => o.status === status);
+  if (de)  ops = ops.filter(o => o.data_op >= de);
+  if (ate) ops = ops.filter(o => o.data_op <= ate);
+  if (!ops.length) return showToast('Nenhuma ORDEM DE PRODUÇÃO encontrada com esses filtros.', 'error');
+  try {
+    showLoading('Gerando relatório...');
+    const doc = await PDFGen.gerarRelatorio(ops);
+    PDFGen.baixar(doc, `Relatorio_OPs_${new Date().toISOString().split('T')[0]}.pdf`);
+  } catch(e) { showToast('Erro: ' + e.message, 'error'); }
+  finally { hideLoading(); }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const hoje = new Date().toISOString().split('T')[0];
+  const mesAnterior = new Date(new Date().setMonth(new Date().getMonth() - 1)).toISOString().split('T')[0];
+  document.getElementById('rel-de').value = mesAnterior;
+  document.getElementById('rel-ate').value = hoje;
+  await loadData();
+});
+</script>
+</body>
+</html>

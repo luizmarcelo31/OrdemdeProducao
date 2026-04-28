@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Registro de entradas finais de produção" />
+  <title>Entradas Finais — Gestão Têxtil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<aside class="sidebar" aria-label="Menu de navegação">
+  <div class="sidebar-logo">
+    <div class="logo-mark">
+      <div class="logo-icon">GT</div>
+      <div><div class="logo-text">Gestão Têxtil</div><div class="logo-sub">Controle de Produção</div></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Principal</div>
+    <a href="index.html" class="nav-link"><span class="nav-icon">⬡</span> DASHBOARD</a>
+    <a href="production.html" class="nav-link"><span class="nav-icon"></span> ORDEM DE PRODUÇÃO</a>
+    <div class="nav-section-label">Facção</div>
+    <a href="outsource.html" class="nav-link"><span class="nav-icon"></span> ENVIO / RETORNO</a>
+    <div class="nav-section-label">Operacional</div>
+    <a href="inventory.html" class="nav-link"><span class="nav-icon"></span> CONSUMO DE MATERIAL</a>
+    <a href="entries.html" class="nav-link"><span class="nav-icon"></span> ENTRADAS FINAIS</a>
+    <div class="nav-section-label">Relatórios</div>
+    <a href="reports.html" class="nav-link"><span class="nav-icon"></span> RELATÓRIOS & PDF</a>
+  </nav>
+  <div class="sidebar-footer">v1.0 · Sistema Têxtil</div>
+</aside>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<main class="main-content">
+  <div class="top-bar">
+    <button class="btn-hamburger" aria-label="Abrir menu" onclick="openSidebar()">
+      <svg viewBox="0 0 20 20"><line x1="2" y1="5" x2="18" y2="5"/><line x1="2" y1="10" x2="18" y2="10"/><line x1="2" y1="15" x2="18" y2="15"/></svg>
+    </button>
+    <span class="top-bar-title">Entradas de Produção <span class="top-bar-breadcrumb">/ FINALIZAÇÃO DE ORDEM DE PRODUÇÃO</span></span>
+  </div>
+
+  <div class="page-content">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Registrar Entrada Final</div>
+          <div class="card-subtitle">Confirme o recebimento da produção finalizada</div>
+        </div>
+      </div>
+
+      <form id="form-entrada" novalidate>
+        <div class="form-grid">
+          <div class="form-group form-span-2">
+            <label class="form-label" for="ent-op">ORDEM DE PRODUÇÃO VINCULADA <span class="required">*</span></label>
+            <select id="ent-op" class="form-control" required>
+              <option value="">Selecione a ORDEM DE PRODUÇÃO...</option>
+            </select>
+          </div>
+
+          <!-- Preview da OP selecionada -->
+          <div id="op-preview" class="form-span-full hidden">
+            <div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:6px;padding:12px 16px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+              <div><div class="form-label">Modelo</div><div id="prev-modelo" style="color:var(--text-primary);font-weight:600;margin-top:3px">—</div></div>
+              <div><div class="form-label">Cor / Tam</div><div id="prev-cor" style="color:var(--text-primary);margin-top:3px">—</div></div>
+              <div><div class="form-label">Qtd Prevista</div><div id="prev-qtd" style="color:var(--accent);font-family:var(--font-mono);font-size:18px;margin-top:3px">—</div></div>
+              <div><div class="form-label">Status</div><div id="prev-status" style="margin-top:3px">—</div></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="ent-qtd">Quantidade Final <span class="required">*</span></label>
+            <input id="ent-qtd" class="form-control" type="number" min="0" required placeholder="0" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="ent-rej">Rejeições</label>
+            <input id="ent-rej" class="form-control" type="number" min="0" value="0" placeholder="0" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="ent-data">Data de Entrada <span class="required">*</span></label>
+            <input id="ent-data" class="form-control" type="date" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="ent-conf">Conferência Final <span class="required">*</span></label>
+            <select id="ent-conf" class="form-control" required>
+              <option value="pendente">⏳ Pendente</option>
+              <option value="aprovado">✅ Aprovado</option>
+              <option value="aprovado_ressalvas">⚠ Aprovado c/ Ressalvas</option>
+              <option value="reprovado">❌ Reprovado</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="ent-resp">Responsável <span class="required">*</span></label>
+            <input id="ent-resp" class="form-control" type="text" required placeholder="Nome do conferente" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="ent-finalizar">Finalizar OP após entrada?</label>
+            <select id="ent-finalizar" class="form-control">
+              <option value="sim">Sim — marcar OP como Finalizada</option>
+              <option value="nao">Não — manter status atual</option>
+            </select>
+          </div>
+
+          <div class="form-group form-span-full">
+            <label class="form-label" for="ent-obs">Observações da Conferência</label>
+            <textarea id="ent-obs" class="form-control" placeholder="Detalhes da conferência, não-conformidades, ações corretivas..."></textarea>
+          </div>
+        </div>
+
+        <hr class="divider" />
+        <div class="btn-group">
+          <button type="submit" class="btn btn-primary btn-lg">Registrar Entrada Final</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Histórico -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Histórico de Entradas Finais</div>
+        <button class="btn btn-outline btn-sm" onclick="loadEntradas()" aria-label="Atualizar entradas">↻ Atualizar</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th scope="col">ORDEM DE PRODUÇÃO</th><th scope="col">Modelo</th><th scope="col">Qtd Final</th><th scope="col">Rejeições</th>
+            <th scope="col">Eficiência</th><th scope="col">Data</th><th scope="col">Conferência</th><th scope="col">Responsável</th>
+          </tr></thead>
+          <tbody id="entradas-tbody">
+            <tr><td colspan="8"><div class="empty-state"><div class="spinner" style="margin:0 auto"></div></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+<script src="js/supabase.js" defer></script>
+<script>
+let _ops = [];
+
+async function loadOPsSelect() {
+  _ops = await DB.list('ordens_producao', { order: { col: 'created_at', asc: false } });
+  const sel = document.getElementById('ent-op');
+  sel.innerHTML = '<option value="">Selecione a ORDEM DE PRODUÇÃO...</option>' +
+    _ops.map(o => `<option value="${o.id}">${o.numero_op} — ${o.modelo} (${o.quantidade} pç)</option>`).join('');
+}
+
+document.getElementById('ent-op').addEventListener('change', (e) => {
+  const op = _ops.find(o => o.id === e.target.value);
+  const prev = document.getElementById('op-preview');
+  if (op) {
+    document.getElementById('prev-modelo').textContent = op.modelo;
+    document.getElementById('prev-cor').textContent = `${op.cor} / ${op.tamanho}`;
+    document.getElementById('prev-qtd').textContent = op.quantidade + ' pç';
+    document.getElementById('prev-status').innerHTML = statusBadge(op.status);
+    prev.classList.remove('hidden');
+    document.getElementById('ent-qtd').value = op.quantidade;
+  } else {
+    prev.classList.add('hidden');
+  }
+});
+
+async function loadEntradas() {
+  const ents = await DB.list('entradas_producao', { order: { col: 'data_entrada', asc: false } });
+  const tbody = document.getElementById('entradas-tbody');
+  if (!ents.length) {
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon"></div><div class="empty-title">Nenhuma entrada registrada</div></div></td></tr>`;
+    return;
+  }
+  const confClass = { aprovado: 'badge-green', reprovado: 'badge-red', pendente: 'badge-gray', aprovado_ressalvas: 'badge-orange' };
+  const confLabel = { aprovado: 'Aprovado', reprovado: 'Reprovado', pendente: 'Pendente', aprovado_ressalvas: 'Com Ressalvas' };
+  tbody.innerHTML = ents.map(en => {
+    const op = _ops.find(o => o.id === en.op_id);
+    const ef = op && op.quantidade > 0 ? ((en.quantidade_final / op.quantidade) * 100).toFixed(1) : '—';
+    const efColor = parseFloat(ef) >= 95 ? 'var(--status-green)' : parseFloat(ef) >= 80 ? 'var(--status-orange)' : 'var(--status-red)';
+    return `<tr>
+      <td class="td-mono">${op?.numero_op || '—'}</td>
+      <td>${op?.modelo || '—'}</td>
+      <td class="td-mono" style="font-weight:600">${en.quantidade_final}</td>
+      <td style="color:var(--status-red)">${en.rejeicoes}</td>
+      <td style="color:${efColor};font-family:var(--font-mono);font-weight:600">${ef !== '—' ? ef + '%' : '—'}</td>
+      <td>${fmtDate(en.data_entrada)}</td>
+      <td><span class="badge ${confClass[en.conferencia_final]||'badge-gray'}">${confLabel[en.conferencia_final]||en.conferencia_final}</span></td>
+      <td>${en.responsavel}</td>
+    </tr>`;
+  }).join('');
+}
+
+document.getElementById('form-entrada').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const opId = document.getElementById('ent-op').value;
+  const finalizar = document.getElementById('ent-finalizar').value === 'sim';
+  const payload = {
+    op_id: opId,
+    quantidade_final: parseInt(document.getElementById('ent-qtd').value) || 0,
+    rejeicoes: parseInt(document.getElementById('ent-rej').value) || 0,
+    data_entrada: document.getElementById('ent-data').value,
+    conferencia_final: document.getElementById('ent-conf').value,
+    responsavel: document.getElementById('ent-resp').value.trim(),
+    observacoes: document.getElementById('ent-obs').value.trim() || null,
+  };
+  if (!payload.op_id || !payload.data_entrada || !payload.responsavel) {
+    return showToast('Preencha os campos obrigatórios!', 'error');
+  }
+  try {
+    showLoading('Salvando entrada...');
+    await DB.insert('entradas_producao', payload);
+    if (finalizar) {
+      await DB.update('ordens_producao', opId, { status: 'finalizada' });
+    }
+    showToast('Entrada registrada com sucesso!', 'success');
+    e.target.reset();
+    document.getElementById('ent-data').value = new Date().toISOString().split('T')[0];
+    document.getElementById('op-preview').classList.add('hidden');
+    await loadEntradas();
+  } catch(err) { showToast('Erro: ' + err.message, 'error'); }
+  finally { hideLoading(); }
+});
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadOPsSelect();
+  await loadEntradas();
+  document.getElementById('ent-data').value = new Date().toISOString().split('T')[0];
+});
+</script>
+</body>
+</html>
