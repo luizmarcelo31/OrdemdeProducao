@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Gestão de ordens de produção têxtil" />
+  <title>Ordens de Produção — Gestão Têxtil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<aside class="sidebar" aria-label="Menu de navegação">
+  <div class="sidebar-logo">
+    <div class="logo-mark">
+      <div class="logo-icon">GT</div>
+      <div>
+        <div class="logo-text">Gestão Têxtil</div>
+        <div class="logo-sub">Controle de Produção</div>
+      </div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Principal</div>
+    <a href="index.html" class="nav-link"><span class="nav-icon"></span> DASHBOARD</a>
+    <a href="production.html" class="nav-link"><span class="nav-icon"></span> ORDENS DE PRODUÇÃO</a>
+    <div class="nav-section-label">Facção</div>
+    <a href="outsource.html" class="nav-link"><span class="nav-icon"></span> ENVIO / RETORNO</a>
+    <div class="nav-section-label">Operacional</div>
+    <a href="inventory.html" class="nav-link"><span class="nav-icon"></span> CONSUMO DE MATERIAL</a>
+    <a href="entries.html" class="nav-link"><span class="nav-icon"></span> ENTRADAS FINAIS</a>
+    <div class="nav-section-label">Relatórios</div>
+    <a href="reports.html" class="nav-link"><span class="nav-icon"></span> RELATÓRIOS & PDF</a>
+  </nav>
+  <div class="sidebar-footer">v1.0 · Sistema Têxtil</div>
+</aside>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<main class="main-content">
+  <div class="top-bar">
+    <button class="btn-hamburger" aria-label="Abrir menu" onclick="openSidebar()">
+      <svg viewBox="0 0 20 20"><line x1="2" y1="5" x2="18" y2="5"/><line x1="2" y1="10" x2="18" y2="10"/><line x1="2" y1="15" x2="18" y2="15"/></svg>
+    </button>
+    <span class="top-bar-title">Ordens de Produção <span class="top-bar-breadcrumb">/ GESTÃO DE ORDENS DE PRODUÇÃO</span></span>
+  </div>
+
+  <div class="page-content">
+
+    <!-- FORMULÁRIO OP -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title" id="form-title">Nova Ordem de Produção</div>
+          <div class="card-subtitle">Preencha todos os campos obrigatórios (*)</div>
+        </div>
+      </div>
+
+      <input type="hidden" id="op-edit-id" />
+
+      <form id="form-op" novalidate>
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label class="form-label" for="num-op">Nº DA ORDEM DE PRODUÇÃO <span class="required">*</span></label>
+            <input id="num-op" class="form-control" type="text" required placeholder="OP2506-XXXX" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="data-op">Data <span class="required">*</span></label>
+            <input id="data-op" class="form-control" type="date" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="status-op">Status</label>
+            <select id="status-op" class="form-control">
+              <option value="aberta">Aberta</option>
+              <option value="em_producao">Em Produção</option>
+              <option value="aguardando_retorno">Aguardando Retorno</option>
+              <option value="em_conferencia">Em Conferência</option>
+              <option value="finalizada">Finalizada</option>
+              <option value="cancelada">Cancelada</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="prioridade">Prioridade</label>
+            <select id="prioridade" class="form-control">
+              <option value="baixa">Baixa</option>
+              <option value="normal" selected>Normal</option>
+              <option value="alta">Alta</option>
+              <option value="urgente">🔴 Urgente</option>
+            </select>
+          </div>
+
+          <div class="form-group form-span-2">
+            <label class="form-label" for="modelo">Modelo / Produto <span class="required">*</span></label>
+            <input id="modelo" class="form-control" type="text" required placeholder="Ex: Camisa Social Slim, Calça Jeans Skinny..." />
+          </div>
+
+          <div class="form-group form-span-2">
+            <label class="form-label" for="descricao">Descrição / Referência</label>
+            <input id="descricao" class="form-control" type="text" placeholder="Ref. interna, coleção, detalhes..." />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="quantidade">Quantidade Total <span class="required">*</span></label>
+            <input id="quantidade" class="form-control" type="number" min="1" required placeholder="0" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="cor">Cor <span class="required">*</span></label>
+            <input id="cor" class="form-control" type="text" required placeholder="Ex: Branco, Navy, Preto..." />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="tamanho">Tamanho(s) <span class="required">*</span></label>
+            <input id="tamanho" class="form-control" type="text" required placeholder="Ex: P / M / G / GG  ou  36-44" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="responsavel">Responsável <span class="required">*</span></label>
+            <input id="responsavel" class="form-control" type="text" required placeholder="Nome do responsável" />
+          </div>
+
+          <div class="form-group form-span-full">
+            <label class="form-label" for="obs-op">Observações</label>
+            <textarea id="obs-op" class="form-control" placeholder="Instruções especiais, detalhes de acabamento, clientes..."></textarea>
+          </div>
+        </div>
+
+        <hr class="divider" />
+        <div class="btn-group">
+          <button type="submit" class="btn btn-primary btn-lg"> Salvar Ordem de Produção</button>
+          <button type="button" id="btn-cancelar" class="btn btn-outline hidden" onclick="ProdPage.cancelarEdicao()">✕ Cancelar Edição</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- TABELA OPs -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Ordens Cadastradas</div>
+          <div class="card-subtitle" id="ops-count">carregando...</div>
+          <!-- KPI elements required by updateKPIs in production.js -->
+          <div style="display:none;">
+            <span id="kpi-total"></span>
+            <span id="kpi-abertas"></span>
+            <span id="kpi-producao"></span>
+            <span id="kpi-finalizadas"></span>
+            <span id="kpi-urgentes"></span>
+          </div>
+        </div>
+        <div class="btn-group">
+          <label for="busca-op" class="sr-only">Buscar ordem de produção</label>
+          <input id="busca-op" class="form-control" type="text" placeholder="🔍 Buscar ORDEM DE PRODUÇÃO, modelo, responsável..." style="width:220px" />
+          <label for="filtro-status" class="sr-only">Filtrar por status</label>
+          <select id="filtro-status" class="form-control" style="width:150px">
+            <option value="">Todos os status</option>
+            <option value="aberta">Aberta</option>
+            <option value="em_producao">Em Produção</option>
+            <option value="aguardando_retorno">Ag. Retorno</option>
+            <option value="em_conferencia">Em Conferência</option>
+            <option value="finalizada">Finalizada</option>
+            <option value="cancelada">Cancelada</option>
+          </select>
+          <button class="btn btn-outline btn-sm" onclick="ProdPage.loadOPs()" aria-label="Atualizar lista">↻ Atualizar</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+            <th scope="col">Nº ORDEM DE PRODUÇÃO</th>
+              <th scope="col">Data</th>
+              <th scope="col">Modelo / Cor / Tam</th>
+              <th scope="col">Qtd</th>
+              <th scope="col">Status</th>
+              <th scope="col">Prioridade</th>
+              <th scope="col">Responsável</th>
+              <th scope="col">Cadastro</th>
+              <th scope="col">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="ops-tbody">
+            <tr><td colspan="9"><div class="empty-state"><div class="spinner" style="margin:0 auto 8px"></div><div class="empty-text">Carregando...</div></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+<script src="js/supabase.js" defer></script>
+<script src="js/pdf.js" defer></script>
+<script src="js/production.js" defer></script>
+<script>
+  // Atualiza contador de OPs
+  document.addEventListener('DOMContentLoaded', () => {
+    // Verifica se ProdPage foi carregado corretamente (js/production.js)
+    if (typeof ProdPage !== 'undefined' && ProdPage.renderTable) {
+      const origRender = ProdPage.renderTable.bind(ProdPage);
+      ProdPage.renderTable = function(filter) {
+        origRender(filter);
+        const countEl = document.getElementById('ops-count');
+        if (countEl) {
+          countEl.textContent = `${ProdPage.ops.length} ordem(ns) no total`;
+        }
+      };
+    }
+  });
+</script>
+</body>
+</html>
