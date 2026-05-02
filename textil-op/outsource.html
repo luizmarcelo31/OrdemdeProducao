@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Controle de facção — envio e retorno de peças" />
-  <title>Facção — Gestão Têxtil</title>
+  <title>Facção — GESTOR TÊXTIL</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
@@ -15,8 +15,8 @@
 <aside class="sidebar" aria-label="Menu de navegação">
   <div class="sidebar-logo">
     <div class="logo-mark">
-      <div class="logo-icon">GT</div>
-      <div><div class="logo-text">Gestão Têxtil</div><div class="logo-sub">Controle de Produção</div></div>
+      <div class="logo-icon">TF</div>
+      <div><div class="logo-text">GESTOR TÊXTIL</div><div class="logo-sub">Controle de Produção</div></div>
     </div>
   </div>
   <nav class="sidebar-nav">
@@ -31,7 +31,7 @@
     <div class="nav-section-label">Relatórios</div>
     <a href="reports.html" class="nav-link"><span class="nav-icon"></span> RELATÓRIOS & PDF</a>
   </nav>
-  <div class="sidebar-footer">v1.0 · Sistema Têxtil</div>
+  <div class="sidebar-footer">v1.0 · GESTOR TÊXTIL</div>
 </aside>
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
 
@@ -39,17 +39,6 @@
   <div class="top-bar">
     <button class="btn-hamburger" aria-label="Abrir menu" onclick="openSidebar()">
       <svg viewBox="0 0 20 20"><line x1="2" y1="5" x2="18" y2="5"/><line x1="2" y1="10" x2="18" y2="10"/><line x1="2" y1="15" x2="18" y2="15"/></svg>
-    </button>
-    <span class="top-bar-title">Controle de Facção <span class="top-bar-breadcrumb">/ ENVIO & RETORNO</span></span>
-    <div class="btn-group">
-      <button class="btn btn-outline btn-sm" onclick="setTab('envio')"> ENVIO</button>
-      <button class="btn btn-outline btn-sm" onclick="setTab('retorno')"> RETORNO</button>
-    </div>
-  </div>
-
-  <div class="page-content">
-
-    <!-- TABS -->
     <div role="tablist" style="display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:0">
       <button id="tab-envio" role="tab" aria-selected="true" aria-controls="section-envio" class="btn btn-ghost" style="border-radius:6px 6px 0 0;border-bottom:2px solid var(--accent);color:var(--accent)" onclick="setTab('envio')">Nota de Envio</button>
       <button id="tab-retorno" role="tab" aria-selected="false" aria-controls="section-retorno" class="btn btn-ghost" style="border-radius:6px 6px 0 0" onclick="setTab('retorno')">Nota de Retorno</button>

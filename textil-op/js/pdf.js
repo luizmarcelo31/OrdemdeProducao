@@ -34,7 +34,7 @@ const PDFGen = {
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(11);
     doc.setTextColor(...this.COLORS.accent);
-    doc.text('GESTÃO TÊXTIL', 14, 14);
+    doc.text('GESTOR TÊXTIL', 14, 14);
 
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(7.5);
